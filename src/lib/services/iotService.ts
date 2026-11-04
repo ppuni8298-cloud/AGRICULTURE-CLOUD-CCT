@@ -307,7 +307,15 @@ export const iotService = {
         if (fieldId) q = q.eq('field_id', fieldId);
         if (userId) q = q.eq('user_id', userId);
         const { data, error } = await q;
-        if (!error && data) return data as IoTSensor[];
+        if (error) {
+          if (error.code === 'PGRST205') {
+            console.warn('[Supabase Notice]: Table "iot_sensors" not found in schema cache. Run agrocloud_complete_schema.sql.');
+            return [];
+          }
+          console.error('[Supabase getSensors error]:', error.message);
+          throw new Error(`Supabase query failed: ${error.message}`);
+        }
+        return (data || []) as IoTSensor[];
       }
     }
 
@@ -328,14 +336,6 @@ export const iotService = {
     sensorData: Omit<IoTSensor, 'id' | 'user_id' | 'created_at' | 'updated_at'>,
     userId: string
   ): Promise<IoTSensor> {
-    const newSensor: IoTSensor = {
-      ...sensorData,
-      id: `sensor-${Date.now()}`,
-      user_id: userId,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
-
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
@@ -344,10 +344,21 @@ export const iotService = {
           .insert([{ ...sensorData, user_id: userId }])
           .select()
           .single();
-        if (!error && data) return data as IoTSensor;
+        if (error) {
+          console.error('[Supabase createSensor error]:', error.message);
+          throw new Error(`Failed to save sensor to Supabase: ${error.message}`);
+        }
+        return data as IoTSensor;
       }
     }
 
+    const newSensor: IoTSensor = {
+      ...sensorData,
+      id: `sensor-${Date.now()}`,
+      user_id: userId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
     const all = getLocalItem<IoTSensor[]>(STORAGE_KEYS.SENSORS, SEED_SENSORS);
     const updated = [newSensor, ...all];
     setLocalItem(STORAGE_KEYS.SENSORS, updated);
@@ -362,13 +373,17 @@ export const iotService = {
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
-        const { data, error } = await (supabase as any)
+        let q = (supabase as any)
           .from('iot_sensors')
           .update({ ...sensorData, updated_at: new Date().toISOString() })
-          .eq('id', sensorId)
-          .select()
-          .single();
-        if (!error && data) return data as IoTSensor;
+          .eq('id', sensorId);
+        if (userId) q = q.eq('user_id', userId);
+        const { data, error } = await q.select().single();
+        if (error) {
+          console.error('[Supabase updateSensor error]:', error.message);
+          throw new Error(`Failed to update sensor in Supabase: ${error.message}`);
+        }
+        return data as IoTSensor;
       }
     }
 
@@ -393,7 +408,11 @@ export const iotService = {
         let q = (supabase as any).from('iot_sensors').delete().eq('id', sensorId);
         if (userId) q = q.eq('user_id', userId);
         const { error } = await q;
-        if (!error) return true;
+        if (error) {
+          console.error('[Supabase deleteSensor error]:', error.message);
+          throw new Error(`Failed to delete sensor from Supabase: ${error.message}`);
+        }
+        return true;
       }
     }
 
@@ -433,7 +452,15 @@ export const iotService = {
         if (params?.userId) q = q.eq('user_id', params.userId);
         if (params?.limit) q = q.limit(params.limit);
         const { data, error } = await q;
-        if (!error && data) return data as SensorReading[];
+        if (error) {
+          if (error.code === 'PGRST205') {
+            console.warn('[Supabase Notice]: Table "sensor_readings" not found in schema cache.');
+            return [];
+          }
+          console.error('[Supabase getReadings error]:', error.message);
+          throw new Error(`Supabase query failed: ${error.message}`);
+        }
+        return (data || []) as SensorReading[];
       }
     }
 
@@ -454,13 +481,6 @@ export const iotService = {
     readingData: Omit<SensorReading, 'id' | 'user_id' | 'created_at'>,
     userId: string
   ): Promise<SensorReading> {
-    const newReading: SensorReading = {
-      ...readingData,
-      id: `reading-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
-      user_id: userId,
-      created_at: new Date().toISOString(),
-    };
-
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
@@ -469,18 +489,24 @@ export const iotService = {
           .insert([{ ...readingData, user_id: userId }])
           .select()
           .single();
-        if (!error && data) return data as SensorReading;
+        if (error) {
+          console.error('[Supabase createReading error]:', error.message);
+          throw new Error(`Failed to save reading to Supabase: ${error.message}`);
+        }
+        return data as SensorReading;
       }
     }
 
+    const newReading: SensorReading = {
+      ...readingData,
+      id: `reading-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      user_id: userId,
+      created_at: new Date().toISOString(),
+    };
     const all = getLocalItem<SensorReading[]>(STORAGE_KEYS.READINGS, SEED_READINGS);
-    // Keep max 2000 readings locally
     const updated = [newReading, ...all].slice(0, 2000);
     setLocalItem(STORAGE_KEYS.READINGS, updated);
-
-    // Evaluate threshold alert automatically
     this.evaluateThresholds(newReading, userId);
-
     return newReading;
   },
 
@@ -488,6 +514,20 @@ export const iotService = {
     readingsData: Omit<SensorReading, 'id' | 'user_id' | 'created_at'>[],
     userId: string
   ): Promise<{ insertedCount: number }> {
+    if (isSupabaseConfigured) {
+      const supabase = createClient();
+      if (supabase) {
+        const { error } = await (supabase as any).from('sensor_readings').insert(
+          readingsData.map((r) => ({ ...r, user_id: userId }))
+        );
+        if (error) {
+          console.error('[Supabase createBatchReadings error]:', error.message);
+          throw new Error(`Failed to batch insert readings into Supabase: ${error.message}`);
+        }
+        return { insertedCount: readingsData.length };
+      }
+    }
+
     const newItems: SensorReading[] = readingsData.map((r, i) => ({
       ...r,
       id: `batch-${Date.now()}-${i}`,
@@ -495,19 +535,9 @@ export const iotService = {
       created_at: new Date().toISOString(),
     }));
 
-    if (isSupabaseConfigured) {
-      const supabase = createClient();
-      if (supabase) {
-        await (supabase as any).from('sensor_readings').insert(
-          readingsData.map((r) => ({ ...r, user_id: userId }))
-        );
-      }
-    }
-
     const all = getLocalItem<SensorReading[]>(STORAGE_KEYS.READINGS, SEED_READINGS);
     const updated = [...newItems, ...all].slice(0, 3000);
     setLocalItem(STORAGE_KEYS.READINGS, updated);
-
     return { insertedCount: newItems.length };
   },
 
@@ -531,7 +561,15 @@ export const iotService = {
         if (params?.severity && params.severity !== 'All') q = q.eq('severity', params.severity);
         if (params?.userId) q = q.eq('user_id', params.userId);
         const { data, error } = await q;
-        if (!error && data) return data as MonitoringAlert[];
+        if (error) {
+          if (error.code === 'PGRST205') {
+            console.warn('[Supabase Notice]: Table "monitoring_alerts" not found in schema cache.');
+            return [];
+          }
+          console.error('[Supabase getAlerts error]:', error.message);
+          throw new Error(`Supabase query failed: ${error.message}`);
+        }
+        return (data || []) as MonitoringAlert[];
       }
     }
 
@@ -551,13 +589,20 @@ export const iotService = {
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
-        await (supabase as any)
+        let q = (supabase as any)
           .from('monitoring_alerts')
           .update({
             status,
             resolved_at: status === 'resolved' ? new Date().toISOString() : null,
           })
           .eq('id', alertId);
+        if (userId) q = q.eq('user_id', userId);
+        const { error } = await q;
+        if (error) {
+          console.error('[Supabase resolveAlert error]:', error.message);
+          throw new Error(`Failed to update alert in Supabase: ${error.message}`);
+        }
+        return true;
       }
     }
 

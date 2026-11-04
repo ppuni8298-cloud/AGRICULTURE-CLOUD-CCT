@@ -372,7 +372,15 @@ export const farmService = {
         let query = supabase.from('farms').select('*').order('created_at', { ascending: false });
         if (userId) query = query.eq('user_id', userId);
         const { data, error } = await query;
-        if (!error && data) return data as Farm[];
+        if (error) {
+          if (error.code === 'PGRST205') {
+            console.warn('[Supabase Notice]: Table "farms" not found in schema cache. Run agrocloud_complete_schema.sql.');
+            return [];
+          }
+          console.error('[Supabase getFarms error]:', error.message);
+          throw new Error(`Supabase query failed: ${error.message}`);
+        }
+        return (data || []) as Farm[];
       }
     }
     const all = getLocalItem<Farm[]>(STORAGE_KEYS.FARMS, SEED_FARMS);
@@ -387,7 +395,12 @@ export const farmService = {
         let query = supabase.from('farms').select('*').eq('id', farmId);
         if (userId) query = query.eq('user_id', userId);
         const { data, error } = await query.single();
-        if (!error && data) return data as Farm;
+        if (error) {
+          if (error.code === 'PGRST116' || error.code === 'PGRST205') return null;
+          console.error('[Supabase getFarmById error]:', error.message);
+          throw new Error(`Supabase query failed: ${error.message}`);
+        }
+        return data as Farm;
       }
     }
     const all = await this.getFarms(userId);
@@ -398,14 +411,6 @@ export const farmService = {
     farmData: Omit<Farm, 'id' | 'user_id' | 'created_at' | 'updated_at'>,
     userId: string
   ): Promise<Farm> {
-    const newFarm: Farm = {
-      ...farmData,
-      id: `farm-${Date.now()}`,
-      user_id: userId,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
-
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
@@ -414,10 +419,21 @@ export const farmService = {
           .insert([{ ...farmData, user_id: userId }])
           .select()
           .single();
-        if (!error && data) return data as Farm;
+        if (error) {
+          console.error('[Supabase createFarm error]:', error.message);
+          throw new Error(`Failed to save farm to Supabase: ${error.message}`);
+        }
+        return data as Farm;
       }
     }
 
+    const newFarm: Farm = {
+      ...farmData,
+      id: `farm-${Date.now()}`,
+      user_id: userId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
     const all = getLocalItem<Farm[]>(STORAGE_KEYS.FARMS, SEED_FARMS);
     const updated = [newFarm, ...all];
     setLocalItem(STORAGE_KEYS.FARMS, updated);
@@ -432,13 +448,17 @@ export const farmService = {
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
-        const { data, error } = await (supabase as any)
+        let q = (supabase as any)
           .from('farms')
           .update({ ...farmData, updated_at: new Date().toISOString() })
-          .eq('id', farmId)
-          .select()
-          .single();
-        if (!error && data) return data as Farm;
+          .eq('id', farmId);
+        if (userId) q = q.eq('user_id', userId);
+        const { data, error } = await q.select().single();
+        if (error) {
+          console.error('[Supabase updateFarm error]:', error.message);
+          throw new Error(`Failed to update farm in Supabase: ${error.message}`);
+        }
+        return data as Farm;
       }
     }
 
@@ -463,7 +483,11 @@ export const farmService = {
         let q = supabase.from('farms').delete().eq('id', farmId);
         if (userId) q = q.eq('user_id', userId);
         const { error } = await q;
-        if (!error) return true;
+        if (error) {
+          console.error('[Supabase deleteFarm error]:', error.message);
+          throw new Error(`Failed to delete farm from Supabase: ${error.message}`);
+        }
+        return true;
       }
     }
 
@@ -498,7 +522,15 @@ export const farmService = {
         if (farmId) q = q.eq('farm_id', farmId);
         if (userId) q = q.eq('user_id', userId);
         const { data, error } = await q;
-        if (!error && data) return data as Field[];
+        if (error) {
+          if (error.code === 'PGRST205') {
+            console.warn('[Supabase Notice]: Table "fields" not found in schema cache. Run agrocloud_complete_schema.sql.');
+            return [];
+          }
+          console.error('[Supabase getFields error]:', error.message);
+          throw new Error(`Supabase query failed: ${error.message}`);
+        }
+        return (data || []) as Field[];
       }
     }
 
@@ -516,7 +548,12 @@ export const farmService = {
         let q = supabase.from('fields').select('*').eq('id', fieldId);
         if (userId) q = q.eq('user_id', userId);
         const { data, error } = await q.single();
-        if (!error && data) return data as Field;
+        if (error) {
+          if (error.code === 'PGRST116' || error.code === 'PGRST205') return null;
+          console.error('[Supabase getFieldById error]:', error.message);
+          throw new Error(`Supabase query failed: ${error.message}`);
+        }
+        return data as Field;
       }
     }
     const all = await this.getFields(undefined, userId);
@@ -527,14 +564,6 @@ export const farmService = {
     fieldData: Omit<Field, 'id' | 'user_id' | 'created_at' | 'updated_at'>,
     userId: string
   ): Promise<Field> {
-    const newField: Field = {
-      ...fieldData,
-      id: `field-${Date.now()}`,
-      user_id: userId,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
-
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
@@ -543,10 +572,21 @@ export const farmService = {
           .insert([{ ...fieldData, user_id: userId }])
           .select()
           .single();
-        if (!error && data) return data as Field;
+        if (error) {
+          console.error('[Supabase createField error]:', error.message);
+          throw new Error(`Failed to save field to Supabase: ${error.message}`);
+        }
+        return data as Field;
       }
     }
 
+    const newField: Field = {
+      ...fieldData,
+      id: `field-${Date.now()}`,
+      user_id: userId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
     const all = getLocalItem<Field[]>(STORAGE_KEYS.FIELDS, SEED_FIELDS);
     const updated = [newField, ...all];
     setLocalItem(STORAGE_KEYS.FIELDS, updated);
@@ -561,13 +601,17 @@ export const farmService = {
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
-        const { data, error } = await (supabase as any)
+        let q = (supabase as any)
           .from('fields')
           .update({ ...fieldData, updated_at: new Date().toISOString() })
-          .eq('id', fieldId)
-          .select()
-          .single();
-        if (!error && data) return data as Field;
+          .eq('id', fieldId);
+        if (userId) q = q.eq('user_id', userId);
+        const { data, error } = await q.select().single();
+        if (error) {
+          console.error('[Supabase updateField error]:', error.message);
+          throw new Error(`Failed to update field in Supabase: ${error.message}`);
+        }
+        return data as Field;
       }
     }
 
@@ -592,7 +636,11 @@ export const farmService = {
         let q = supabase.from('fields').delete().eq('id', fieldId);
         if (userId) q = q.eq('user_id', userId);
         const { error } = await q;
-        if (!error) return true;
+        if (error) {
+          console.error('[Supabase deleteField error]:', error.message);
+          throw new Error(`Failed to delete field from Supabase: ${error.message}`);
+        }
+        return true;
       }
     }
 
@@ -624,7 +672,15 @@ export const farmService = {
         if (farmId) q = q.eq('farm_id', farmId);
         if (userId) q = q.eq('user_id', userId);
         const { data, error } = await q;
-        if (!error && data) return data as Crop[];
+        if (error) {
+          if (error.code === 'PGRST205') {
+            console.warn('[Supabase Notice]: Table "crops" not found in schema cache. Run agrocloud_complete_schema.sql.');
+            return [];
+          }
+          console.error('[Supabase getCrops error]:', error.message);
+          throw new Error(`Supabase query failed: ${error.message}`);
+        }
+        return (data || []) as Crop[];
       }
     }
 
@@ -640,14 +696,6 @@ export const farmService = {
     cropData: Omit<Crop, 'id' | 'user_id' | 'created_at' | 'updated_at'>,
     userId: string
   ): Promise<Crop> {
-    const newCrop: Crop = {
-      ...cropData,
-      id: `crop-${Date.now()}`,
-      user_id: userId,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
-
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
@@ -656,10 +704,21 @@ export const farmService = {
           .insert([{ ...cropData, user_id: userId }])
           .select()
           .single();
-        if (!error && data) return data as Crop;
+        if (error) {
+          console.error('[Supabase createCrop error]:', error.message);
+          throw new Error(`Failed to save crop to Supabase: ${error.message}`);
+        }
+        return data as Crop;
       }
     }
 
+    const newCrop: Crop = {
+      ...cropData,
+      id: `crop-${Date.now()}`,
+      user_id: userId,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
     const all = getLocalItem<Crop[]>(STORAGE_KEYS.CROPS, SEED_CROPS);
     const updated = [newCrop, ...all];
     setLocalItem(STORAGE_KEYS.CROPS, updated);
@@ -670,13 +729,17 @@ export const farmService = {
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
-        const { data, error } = await (supabase as any)
+        let q = (supabase as any)
           .from('crops')
           .update({ ...cropData, updated_at: new Date().toISOString() })
-          .eq('id', cropId)
-          .select()
-          .single();
-        if (!error && data) return data as Crop;
+          .eq('id', cropId);
+        if (userId) q = q.eq('user_id', userId);
+        const { data, error } = await q.select().single();
+        if (error) {
+          console.error('[Supabase updateCrop error]:', error.message);
+          throw new Error(`Failed to update crop in Supabase: ${error.message}`);
+        }
+        return data as Crop;
       }
     }
 
@@ -701,7 +764,11 @@ export const farmService = {
         let q = supabase.from('crops').delete().eq('id', cropId);
         if (userId) q = q.eq('user_id', userId);
         const { error } = await q;
-        if (!error) return true;
+        if (error) {
+          console.error('[Supabase deleteCrop error]:', error.message);
+          throw new Error(`Failed to delete crop from Supabase: ${error.message}`);
+        }
+        return true;
       }
     }
 
@@ -722,7 +789,15 @@ export const farmService = {
         if (fieldId) q = q.eq('field_id', fieldId);
         if (userId) q = q.eq('user_id', userId);
         const { data, error } = await q;
-        if (!error && data) return data as FarmingActivity[];
+        if (error) {
+          if (error.code === 'PGRST205') {
+            console.warn('[Supabase Notice]: Table "farming_activities" not found in schema cache.');
+            return [];
+          }
+          console.error('[Supabase getActivities error]:', error.message);
+          throw new Error(`Supabase query failed: ${error.message}`);
+        }
+        return (data || []) as FarmingActivity[];
       }
     }
 
@@ -738,13 +813,6 @@ export const farmService = {
     activityData: Omit<FarmingActivity, 'id' | 'user_id' | 'created_at'>,
     userId: string
   ): Promise<FarmingActivity> {
-    const newAct: FarmingActivity = {
-      ...activityData,
-      id: `act-${Date.now()}`,
-      user_id: userId,
-      created_at: new Date().toISOString(),
-    };
-
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
@@ -753,10 +821,20 @@ export const farmService = {
           .insert([{ ...activityData, user_id: userId }])
           .select()
           .single();
-        if (!error && data) return data as FarmingActivity;
+        if (error) {
+          console.error('[Supabase createActivity error]:', error.message);
+          throw new Error(`Failed to save activity to Supabase: ${error.message}`);
+        }
+        return data as FarmingActivity;
       }
     }
 
+    const newAct: FarmingActivity = {
+      ...activityData,
+      id: `act-${Date.now()}`,
+      user_id: userId,
+      created_at: new Date().toISOString(),
+    };
     const all = getLocalItem<FarmingActivity[]>(STORAGE_KEYS.ACTIVITIES, SEED_ACTIVITIES);
     const updated = [newAct, ...all];
     setLocalItem(STORAGE_KEYS.ACTIVITIES, updated);
@@ -770,7 +848,11 @@ export const farmService = {
         let q = supabase.from('farming_activities').delete().eq('id', activityId);
         if (userId) q = q.eq('user_id', userId);
         const { error } = await q;
-        if (!error) return true;
+        if (error) {
+          console.error('[Supabase deleteActivity error]:', error.message);
+          throw new Error(`Failed to delete activity from Supabase: ${error.message}`);
+        }
+        return true;
       }
     }
 
@@ -793,7 +875,15 @@ export const farmService = {
         if (fieldId) q = q.eq('field_id', fieldId);
         if (userId) q = q.eq('user_id', userId);
         const { data, error } = await q;
-        if (!error && data) return data as FarmingExpense[];
+        if (error) {
+          if (error.code === 'PGRST205') {
+            console.warn('[Supabase Notice]: Table "farming_expenses" not found in schema cache.');
+            return [];
+          }
+          console.error('[Supabase getExpenses error]:', error.message);
+          throw new Error(`Supabase query failed: ${error.message}`);
+        }
+        return (data || []) as FarmingExpense[];
       }
     }
 
@@ -809,13 +899,6 @@ export const farmService = {
     expenseData: Omit<FarmingExpense, 'id' | 'user_id' | 'created_at'>,
     userId: string
   ): Promise<FarmingExpense> {
-    const newExp: FarmingExpense = {
-      ...expenseData,
-      id: `exp-${Date.now()}`,
-      user_id: userId,
-      created_at: new Date().toISOString(),
-    };
-
     if (isSupabaseConfigured) {
       const supabase = createClient();
       if (supabase) {
@@ -824,10 +907,20 @@ export const farmService = {
           .insert([{ ...expenseData, user_id: userId }])
           .select()
           .single();
-        if (!error && data) return data as FarmingExpense;
+        if (error) {
+          console.error('[Supabase createExpense error]:', error.message);
+          throw new Error(`Failed to save expense to Supabase: ${error.message}`);
+        }
+        return data as FarmingExpense;
       }
     }
 
+    const newExp: FarmingExpense = {
+      ...expenseData,
+      id: `exp-${Date.now()}`,
+      user_id: userId,
+      created_at: new Date().toISOString(),
+    };
     const all = getLocalItem<FarmingExpense[]>(STORAGE_KEYS.EXPENSES, SEED_EXPENSES);
     const updated = [newExp, ...all];
     setLocalItem(STORAGE_KEYS.EXPENSES, updated);
@@ -841,7 +934,11 @@ export const farmService = {
         let q = supabase.from('farming_expenses').delete().eq('id', expenseId);
         if (userId) q = q.eq('user_id', userId);
         const { error } = await q;
-        if (!error) return true;
+        if (error) {
+          console.error('[Supabase deleteExpense error]:', error.message);
+          throw new Error(`Failed to delete expense from Supabase: ${error.message}`);
+        }
+        return true;
       }
     }
 
