@@ -170,7 +170,28 @@
     "upcomingModule": "Upcoming in Next Phase",
     "emptyFarmsTitle": "No farms registered yet",
     "emptyFarmsDesc": "Add your first agricultural plot to start monitoring soil moisture, crop cycles, and localized micro-weather.",
-    "viewAll": "View All"
+    "viewAll": "View All",
+    "virtualSensors": "Virtual IoT Sensors",
+    "thresholdAlerts": "Threshold Alerts",
+    "irrigationAdvisor": "Smart Irrigation Advisor",
+    "simulatedNotice": "SIMULATED IoT DATA – NOT FROM PHYSICAL HARDWARE"
+  },
+  "monitoring": {
+    "title": "Smart IoT & Micro-Weather Monitoring",
+    "subtitle": "Software-modeled telemetry, virtual IoT sensors, Open-Meteo forecasts and agronomic threshold monitoring.",
+    "simulatedDisclaimer": "SIMULATED IoT DATA – NOT FROM PHYSICAL HARDWARE: Virtual sensor readings are generated via mathematical and environmental models. No physical hardware connection is active.",
+    "soilMoisture": "Soil Moisture",
+    "soilTemperature": "Soil Temperature",
+    "airTemperature": "Air Temperature",
+    "airHumidity": "Air Humidity",
+    "soilPh": "Soil pH",
+    "rainfall": "Rainfall",
+    "windSpeed": "Wind Speed",
+    "lightIntensity": "Light Intensity",
+    "simulationControl": "Simulation Control",
+    "manualEntry": "Manual Telemetry",
+    "csvImport": "Import CSV Readings",
+    "anomalyInjection": "Inject Anomaly"
   },
   "contact": {
     "badge": "Get in Touch",

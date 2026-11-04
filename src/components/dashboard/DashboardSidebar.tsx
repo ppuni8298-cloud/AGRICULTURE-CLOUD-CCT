@@ -13,6 +13,7 @@ import {
   ScanEye,
   Activity,
   CloudSun,
+  Droplets,
   TrendingUp,
   Cpu,
   FileBarChart,
@@ -66,8 +67,14 @@ export function DashboardSidebar({ isOpen, onClose }: DashboardSidebarProps) {
     },
     {
       title: t('dashboard.smartMonitoring', 'Smart Monitoring'),
-      href: '/dashboard/smart-monitoring',
+      href: '/dashboard/monitoring',
       icon: Activity,
+      status: 'Active',
+    },
+    {
+      title: t('dashboard.irrigation', 'Smart Irrigation'),
+      href: '/dashboard/irrigation',
+      icon: Droplets,
       status: 'Active',
     },
     {

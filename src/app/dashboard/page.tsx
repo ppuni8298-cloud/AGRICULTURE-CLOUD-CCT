@@ -8,7 +8,8 @@ import { WeatherCard } from '@/components/dashboard/WeatherCard';
 import { FarmHealthChart } from '@/components/dashboard/FarmHealthChart';
 import { SAMPLE_MANDI_RECORDS } from '@/lib/constants/mandiData';
 import { farmService } from '@/lib/services/farmService';
-import type { FarmingActivity } from '@/lib/supabase/types';
+import { iotService } from '@/lib/services/iotService';
+import type { FarmingActivity, SensorReading, MonitoringAlert } from '@/lib/supabase/types';
 import { Button } from '@/components/ui/Button';
 import {
   MapPin,
@@ -27,6 +28,15 @@ import {
   FileText,
   AlertCircle,
   IndianRupee,
+  Droplets,
+  Thermometer,
+  Cpu,
+  AlertTriangle,
+  CloudSun,
+  ShieldAlert,
+  Sliders,
+  Radio,
+  ExternalLink,
 } from 'lucide-react';
 
 export default function DashboardOverviewPage() {
@@ -46,15 +56,53 @@ export default function DashboardOverviewPage() {
   });
   const [recentActivities, setRecentActivities] = useState<FarmingActivity[]>([]);
 
+  // Phase 3 Virtual IoT & Alert Telemetry
+  const [telemetry, setTelemetry] = useState<{
+    soilMoisture: number | null;
+    soilTemp: number | null;
+    airTemp: number | null;
+    airHumidity: number | null;
+    activeAlerts: number;
+    criticalAlerts: number;
+    sensorCount: number;
+  }>({
+    soilMoisture: null,
+    soilTemp: null,
+    airTemp: null,
+    airHumidity: null,
+    activeAlerts: 0,
+    criticalAlerts: 0,
+    sensorCount: 0,
+  });
+
   useEffect(() => {
     async function fetchStats() {
       try {
-        const [stats, acts] = await Promise.all([
+        const [stats, acts, readings, alerts, sensors] = await Promise.all([
           farmService.getDashboardStats(user?.id),
           farmService.getActivities(undefined, undefined, user?.id),
+          iotService.getReadings({ limit: 40, userId: user?.id }),
+          iotService.getAlerts({ status: 'active', userId: user?.id }),
+          iotService.getSensors(undefined, undefined, user?.id),
         ]);
         setDbStats(stats);
         setRecentActivities(acts.slice(0, 4));
+
+        const sm = readings.find((r) => r.parameter === 'soil_moisture')?.value ?? 42.5;
+        const st = readings.find((r) => r.parameter === 'soil_temperature')?.value ?? 24.2;
+        const at = readings.find((r) => r.parameter === 'air_temperature')?.value ?? 28.5;
+        const ah = readings.find((r) => r.parameter === 'air_humidity')?.value ?? 64.0;
+        const crit = alerts.filter((a) => a.severity === 'critical').length;
+
+        setTelemetry({
+          soilMoisture: sm,
+          soilTemp: st,
+          airTemp: at,
+          airHumidity: ah,
+          activeAlerts: alerts.length,
+          criticalAlerts: crit,
+          sensorCount: sensors.length,
+        });
       } catch (err) {
         console.error('Failed to load dashboard metrics:', err);
       }
@@ -195,6 +243,156 @@ export default function DashboardOverviewPage() {
         </div>
       </div>
 
+      {/* Phase 3: Virtual IoT Live Telemetry Strip & Warning Banner */}
+      <div className="space-y-4">
+        {/* Prominent Simulated Warning Notice */}
+        <div className="p-4 rounded-2xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-amber-900 dark:text-amber-200 shadow-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 flex items-center justify-center shrink-0">
+              <ShieldAlert className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300">
+                SIMULATED IoT DATA – NOT FROM PHYSICAL HARDWARE
+              </p>
+              <p className="text-xs text-amber-700/90 dark:text-amber-400/90">
+                Environmental readings are generated via software simulation and manual telemetry. No physical IoT hardware is connected.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+            <Link
+              href="/dashboard/monitoring"
+              className="text-xs font-semibold px-3 py-1.5 rounded-xl bg-amber-200/80 dark:bg-amber-800 text-amber-900 dark:text-amber-100 hover:bg-amber-300 dark:hover:bg-amber-700 transition-colors inline-flex items-center gap-1.5"
+            >
+              <Activity className="w-3.5 h-3.5" />
+              <span>Simulation Console</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* 4 Telemetry Quick Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link
+            href="/dashboard/monitoring"
+            className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all group"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] font-bold text-stone-500 dark:text-emerald-400 uppercase">
+                Soil Moisture
+              </span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200">
+                SIMULATED
+              </span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-emerald-950 dark:text-emerald-100">
+                {telemetry.soilMoisture !== null ? telemetry.soilMoisture.toFixed(1) : '42.5'}
+              </span>
+              <span className="text-xs text-stone-500 font-semibold">%</span>
+            </div>
+            <p className="text-[11px] text-emerald-600 dark:text-emerald-400 mt-1 font-medium flex items-center gap-1">
+              <Droplets className="w-3.5 h-3.5" />
+              <span>FDR Probe (Root Zone)</span>
+            </p>
+          </Link>
+
+          <Link
+            href="/dashboard/monitoring"
+            className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all group"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] font-bold text-stone-500 dark:text-emerald-400 uppercase">
+                Soil Temperature
+              </span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200">
+                SIMULATED
+              </span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-emerald-950 dark:text-emerald-100">
+                {telemetry.soilTemp !== null ? telemetry.soilTemp.toFixed(1) : '24.2'}
+              </span>
+              <span className="text-xs text-stone-500 font-semibold">°C</span>
+            </div>
+            <p className="text-[11px] text-stone-500 dark:text-emerald-300/80 mt-1 font-medium flex items-center gap-1">
+              <Thermometer className="w-3.5 h-3.5" />
+              <span>Sub-surface Thermistor</span>
+            </p>
+          </Link>
+
+          <Link
+            href="/dashboard/weather"
+            className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all group"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] font-bold text-stone-500 dark:text-emerald-400 uppercase">
+                Weather Microclimate
+              </span>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200">
+                OPEN-METEO
+              </span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-emerald-950 dark:text-emerald-100">
+                {telemetry.airTemp !== null ? telemetry.airTemp.toFixed(1) : '28.5'}
+              </span>
+              <span className="text-xs text-stone-500 font-semibold">°C &bull; {telemetry.airHumidity !== null ? telemetry.airHumidity.toFixed(0) : '64'}% RH</span>
+            </div>
+            <p className="text-[11px] text-blue-600 dark:text-blue-400 mt-1 font-medium flex items-center gap-1">
+              <CloudSun className="w-3.5 h-3.5" />
+              <span>Live Forecast & Spray Window</span>
+            </p>
+          </Link>
+
+          <Link
+            href="/dashboard/monitoring/alerts"
+            className={`p-4 rounded-2xl border shadow-sm hover:shadow-md transition-all group ${
+              telemetry.criticalAlerts > 0
+                ? 'bg-rose-50/80 dark:bg-rose-950/30 border-rose-200 dark:border-rose-900'
+                : telemetry.activeAlerts > 0
+                ? 'bg-amber-50/80 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900'
+                : 'bg-white dark:bg-[#0A2920] border-emerald-100 dark:border-emerald-800/80'
+            }`}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] font-bold text-stone-500 dark:text-emerald-400 uppercase">
+                Threshold Alerts
+              </span>
+              <span
+                className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                  telemetry.criticalAlerts > 0
+                    ? 'bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-200'
+                    : telemetry.activeAlerts > 0
+                    ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
+                    : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200'
+                }`}
+              >
+                {telemetry.activeAlerts} ACTIVE
+              </span>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-black text-emerald-950 dark:text-emerald-100">
+                {telemetry.activeAlerts}
+              </span>
+              <span className="text-xs text-stone-500 font-semibold">
+                {telemetry.criticalAlerts > 0 ? `(${telemetry.criticalAlerts} Critical)` : 'Threshold breaches'}
+              </span>
+            </div>
+            <p
+              className={`text-[11px] mt-1 font-medium flex items-center gap-1 ${
+                telemetry.criticalAlerts > 0
+                  ? 'text-rose-600 dark:text-rose-400 font-bold'
+                  : 'text-emerald-600 dark:text-emerald-400'
+              }`}
+            >
+              <AlertTriangle className="w-3.5 h-3.5" />
+              <span>Review Advisory Actions &rarr;</span>
+            </p>
+          </Link>
+        </div>
+      </div>
+
       {/* Main Grid: Weather + Farm Health Recharts Chart OR Empty State */}
       {showEmptyState ? (
         <div className="p-10 rounded-3xl bg-white dark:bg-[#0A2920] border-2 border-dashed border-emerald-200 dark:border-emerald-800 text-center max-w-2xl mx-auto space-y-4">
@@ -281,66 +479,139 @@ export default function DashboardOverviewPage() {
           </div>
 
           {/* Quick Ecosystem Tools Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <Link
-              href="/dashboard/farms"
-              className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
-            >
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
-                Manage Farms
-              </span>
-              <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
-                Fields & Soil
-              </span>
-            </Link>
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xs font-bold text-stone-500 dark:text-emerald-400 uppercase tracking-wider">
+                Ecosystem Modules & Tools
+              </h3>
+              <Link
+                href="/dashboard/monitoring"
+                className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+              >
+                Explore IoT Suite &rarr;
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <Link
+                href="/dashboard/farms"
+                className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
+                  Manage Farms
+                </span>
+                <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
+                  Plots & Soil
+                </span>
+              </Link>
 
-            <Link
-              href="/dashboard/crops"
-              className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
-            >
-              <div className="w-10 h-10 rounded-xl bg-lime-100 dark:bg-lime-950/60 text-lime-700 dark:text-lime-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
-                <Wheat className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
-                Crop Cycles
-              </span>
-              <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
-                Growth Stages
-              </span>
-            </Link>
+              <Link
+                href="/dashboard/crops"
+                className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-lime-100 dark:bg-lime-950/60 text-lime-700 dark:text-lime-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <Wheat className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
+                  Crop Cycles
+                </span>
+                <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
+                  Growth Stages
+                </span>
+              </Link>
 
-            <Link
-              href="/dashboard/crop-doctor"
-              className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
-            >
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
-                <ScanEye className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
-                Crop Doctor
-              </span>
-              <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
-                Disease Scan
-              </span>
-            </Link>
+              <Link
+                href="/dashboard/monitoring"
+                className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <Activity className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
+                  IoT Monitoring
+                </span>
+                <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
+                  8 Telemetry Cards
+                </span>
+              </Link>
 
-            <Link
-              href="/dashboard/ai-assistant"
-              className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
-            >
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
-                <Bot className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
-                Agri AI Chat
-              </span>
-              <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
-                12 Languages
-              </span>
-            </Link>
+              <Link
+                href="/dashboard/monitoring/sensors"
+                className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <Cpu className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
+                  Virtual Sensors
+                </span>
+                <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
+                  Device Registry
+                </span>
+              </Link>
+
+              <Link
+                href="/dashboard/weather"
+                className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <CloudSun className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
+                  Weather Hub
+                </span>
+                <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
+                  Open-Meteo & Spray
+                </span>
+              </Link>
+
+              <Link
+                href="/dashboard/irrigation"
+                className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-cyan-100 dark:bg-cyan-900/60 text-cyan-700 dark:text-cyan-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <Sliders className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
+                  Smart Irrigation
+                </span>
+                <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
+                  Advisory Rules
+                </span>
+              </Link>
+
+              <Link
+                href="/dashboard/crop-doctor"
+                className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <ScanEye className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
+                  Crop Doctor
+                </span>
+                <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
+                  Disease Scan
+                </span>
+              </Link>
+
+              <Link
+                href="/dashboard/ai-assistant"
+                className="p-4 rounded-2xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800/80 shadow-sm hover:shadow-md transition-all text-center group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <Bot className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100 block">
+                  Agri AI Chat
+                </span>
+                <span className="text-[10px] text-stone-500 dark:text-emerald-400 mt-0.5 block">
+                  12 Languages
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
 
