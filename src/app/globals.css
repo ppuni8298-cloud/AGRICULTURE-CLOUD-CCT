@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #F5FAF5;
+    --bg-surface: #FFFFFF;
+    --text-primary: #16352A;
+    --text-secondary: #64756B;
+    --border-color: #E2ECE5;
+    --brand-primary: #059669;
+    --brand-forest: #064E3B;
+    --brand-secondary: #10B981;
+    --brand-leaf: #84CC16;
+  }
+
+  .dark {
+    --bg-main: #051D16;
+    --bg-surface: #0A2920;
+    --text-primary: #E6F4EA;
+    --text-secondary: #8DA99B;
+    --border-color: #134B3B;
+    --brand-primary: #10B981;
+    --brand-forest: #064E3B;
+    --brand-secondary: #34D399;
+    --brand-leaf: #A3E635;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #1B4D3E;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
+/* Glassmorphism surfaces */
+.glass-surface-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 236, 229, 0.8);
+}
+
+.glass-surface-dark {
+  background: rgba(10, 41, 32, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(19, 75, 59, 0.8);
+}
+
+/* Green gradient accents */
+.bg-gradient-agro {
+  background: linear-gradient(135deg, #064E3B 0%, #059669 50%, #10B981 100%);
+}
+
+.bg-gradient-agro-subtle {
+  background: linear-gradient(180deg, rgba(245, 250, 245, 1) 0%, rgba(232, 245, 237, 0.6) 100%);
+}
+
+.dark .bg-gradient-agro-subtle {
+  background: linear-gradient(180deg, rgba(5, 29, 22, 1) 0%, rgba(10, 41, 32, 0.6) 100%);
+}
+
+/* Animation utilities */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+

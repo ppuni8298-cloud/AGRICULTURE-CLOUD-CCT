@@ -1,0 +1,201 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "solutions": "Solutions",
+    "mandi": "Mandi Intelligence",
+    "languages": "Languages",
+    "about": "About",
+    "login": "Login",
+    "getStarted": "Get Started Free",
+    "dashboard": "Dashboard",
+    "logout": "Sign Out"
+  },
+  "hero": {
+    "badge": "AI-Powered Cloud Ecosystem for Indian Agriculture",
+    "headline": "Empowering Farmers with the Intelligence of AI.",
+    "subtitle": "Your intelligent agricultural companion to monitor farms, understand crop health, explore Indian mandi prices and make smarter farming decisions – all through one powerful multilingual cloud platform.",
+    "ctaPrimary": "Get Started Free",
+    "ctaSecondary": "Explore Features",
+    "floatingDashboard": "Farm Analytics Live",
+    "cropHealth": "Crop Health: 94% Optimal",
+    "weatherPreview": "Monsoon Forecast: Rain expected in 48h",
+    "aiAssistantBadge": "AgroCloud AI Assistant Online"
+  },
+  "capabilities": {
+    "badge": "Next-Gen Capabilities",
+    "title": "Built for India's Diverse Agricultural Landscape",
+    "subtitle": "Cloud-native intelligence engineered to bridge precision technology with real Indian farming realities.",
+    "ai": {
+      "title": "Artificial Intelligence",
+      "desc": "Deep neural networks trained for localized crop disease identification, automated advisory, and predictive farming guidance."
+    },
+    "farm": {
+      "title": "Smart Farm Management",
+      "desc": "Centralized mapping of plots, soil nutrient history, irrigation tracking, and yield schedules across multi-acre holdings."
+    },
+    "multilingual": {
+      "title": "Multilingual Interaction",
+      "desc": "True native interaction across 12 Indian languages, breaking technological barriers for farmers across every state."
+    },
+    "market": {
+      "title": "Market Intelligence",
+      "desc": "Transparent commodity prices, APMC market arrivals, and historical trends to empower fair price negotiation."
+    },
+    "cloud": {
+      "title": "Cloud-Based Access",
+      "desc": "Secure, enterprise-grade cloud architecture with Supabase database, instant synchronization, and offline-first capabilities."
+    }
+  },
+  "features": {
+    "badge": "Comprehensive SaaS Suite",
+    "title": "16 Modular Solutions for Modern Agriculture",
+    "subtitle": "Explore our planned end-to-end ecosystem, engineered to deliver intelligent farm advisory from sowing to harvest.",
+    "learnMore": "Learn More",
+    "statusActive": "Active in Phase 1",
+    "statusPlanned": "Planned Capability",
+    "modalTitle": "Feature Overview & Technical Architecture",
+    "modalClose": "Close Details"
+  },
+  "multilingual": {
+    "badge": "Pan-India Inclusivity",
+    "headline": "Your Language. Your Farm. Your Intelligence.",
+    "subtitle": "Indian agriculture speaks dozens of dialects. AgroCloud AI is designed from the ground up to communicate fluently in 12 Indian languages.",
+    "activeLang": "Currently Active",
+    "switchPrompt": "Click any language below to switch the entire application interface instantly:"
+  },
+  "aiDemo": {
+    "badge": "Interactive Assistant Demonstration",
+    "title": "Conversational Agricultural Advisory",
+    "subtitle": "Experience how farmers can interact in natural language to diagnose symptoms, plan crop schedules, and receive verified agronomic recommendations.",
+    "disclaimer": "Demonstration Preview: Illustrates conversational advisory format. Production diagnosis requires image uploads and multi-spectral validation.",
+    "userPrompt": "My tomato leaves are turning yellow with brown spots around the edges. What should I do?",
+    "aiResponse": "Based on the symptoms of yellowing leaves with necrotic margins on tomato plants, this is likely Early Blight (Alternaria solani) or nutrient deficiency (Nitrogen or Potassium). Immediate steps:\n1. Isolate and prune lower affected foliage to stop spore splash.\n2. Ensure drip lines do not splash soil onto stems.\n3. Apply Mancozeb 75% WP (2g/L) or Copper Oxychloride if fungal signs persist.\n4. Consult local Krishi Vigyan Kendra (KVK) for soil nitrate testing.",
+    "confidence": "Agronomic Diagnostic Confidence: 91%",
+    "actionAdvice": "Generated via AgroCloud Crop Diagnostics Protocol v1.4"
+  },
+  "mandi": {
+    "badge": "Agri-Market Intelligence Preview",
+    "title": "All-India Mandi Price Explorer",
+    "subtitle": "Explore transparent price benchmarks across APMC markets. Empowering farmers to avoid distress selling.",
+    "disclaimer": "Sample Demonstration Records: Illustrates APMC benchmark tracking. Production release integrates official e-NAM and Agmarknet feeds.",
+    "selectCommodity": "Select Commodity",
+    "selectState": "Select State",
+    "selectDistrict": "Select District",
+    "selectMarket": "Select Market",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price",
+    "modalPrice": "Modal Price",
+    "unit": "₹ / Quintal",
+    "reportedOn": "Reporting Date"
+  },
+  "howItWorks": {
+    "badge": "Simple Onboarding",
+    "title": "How AgroCloud AI Empowers You",
+    "subtitle": "Start digitizing your agricultural practices in four structured steps.",
+    "step1": {
+      "title": "Register Your Account",
+      "desc": "Sign up in seconds, pick your regional language, and choose your role as Farmer, Consultant, or Admin."
+    },
+    "step2": {
+      "title": "Add Your Farm & Crops",
+      "desc": "Map your agricultural plots, record crop varieties, sowing dates, and current irrigation methods."
+    },
+    "step3": {
+      "title": "Explore AI-Powered Tools",
+      "desc": "Access disease scanners, micro-weather advisories, and APMC mandi price benchmarks tailored to your region."
+    },
+    "step4": {
+      "title": "Make Informed Decisions",
+      "desc": "Maximize yields, minimize input costs, prevent pest outbreaks, and sell at the best market prices."
+    }
+  },
+  "auth": {
+    "loginTitle": "Welcome Back to AgroCloud AI",
+    "loginSubtitle": "Access your farm dashboard, market intelligence, and AI advisory.",
+    "registerTitle": "Create Your AgroCloud AI Account",
+    "registerSubtitle": "Join India's premier intelligent cloud agricultural ecosystem.",
+    "forgotTitle": "Reset Your Password",
+    "forgotSubtitle": "Enter your registered email address to receive password reset instructions.",
+    "fullName": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number (10 digits)",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "role": "Account Role",
+    "roleFarmer": "Farmer",
+    "roleConsultant": "Agricultural Consultant",
+    "roleAdmin": "Administrator",
+    "preferredLanguage": "Preferred Language",
+    "state": "State / Union Territory",
+    "acceptTerms": "I agree to the Terms of Service and Privacy Policy",
+    "rememberMe": "Remember this session",
+    "forgotPasswordLink": "Forgot password?",
+    "signInButton": "Sign In to Dashboard",
+    "registerButton": "Complete Registration",
+    "alreadyHaveAccount": "Already registered?",
+    "dontHaveAccount": "Don't have an account?",
+    "signUpLink": "Create an account",
+    "signInLink": "Sign in here",
+    "backToLogin": "Back to login",
+    "sendResetLink": "Send Reset Link",
+    "passwordStrength": "Password Strength",
+    "localModeBadge": "Interactive Development Mode Active"
+  },
+  "dashboard": {
+    "overview": "Overview",
+    "myFarms": "My Farms",
+    "fieldsAndCrops": "Fields & Crops",
+    "aiAssistant": "AI Assistant",
+    "cropDoctor": "Crop Doctor",
+    "smartMonitoring": "Smart Monitoring",
+    "weather": "Weather Intelligence",
+    "mandiIntelligence": "Mandi Intelligence",
+    "digitalTwin": "Digital Farm Twin",
+    "reports": "Reports & Analytics",
+    "marketplace": "Agri Marketplace",
+    "governmentSchemes": "Government Schemes",
+    "finance": "Farmer Finance",
+    "settings": "Settings",
+    "welcome": "Welcome back",
+    "farmHealth": "Overall Farm Health",
+    "totalFarms": "Total Farms",
+    "totalFields": "Total Fields",
+    "registeredCrops": "Active Crops",
+    "recentActivity": "Recent Farm Activity",
+    "quickActions": "Quick Farm Actions",
+    "addFarmBtn": "Add New Farm",
+    "diagnoseCropBtn": "Scan Crop Disease",
+    "checkMandiBtn": "Check Mandi Rates",
+    "upcomingModule": "Upcoming in Next Phase",
+    "emptyFarmsTitle": "No farms registered yet",
+    "emptyFarmsDesc": "Add your first agricultural plot to start monitoring soil moisture, crop cycles, and localized micro-weather.",
+    "viewAll": "View All"
+  },
+  "contact": {
+    "badge": "Get in Touch",
+    "title": "Contact the AgroCloud AI Team",
+    "subtitle": "Have questions about deployment, partnerships, or agronomic data? Our technical team is here to assist.",
+    "name": "Your Name",
+    "email": "Email Address",
+    "subject": "Subject",
+    "message": "Message / Query",
+    "submit": "Send Message",
+    "success": "Thank you! Your inquiry has been received. Our agricultural tech team will respond shortly."
+  },
+  "faq": {
+    "badge": "Got Questions?",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Answers to common questions regarding AgroCloud AI capabilities, data privacy, and upcoming phases."
+  },
+  "footer": {
+    "tagline": "Smart Farming. Intelligent Decisions. Better Tomorrow.",
+    "rights": "All rights reserved. Cloud Computing Capstone Project.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "security": "Security & RLS",
+    "contact": "Contact Us",
+    "designedFor": "Engineered for Indian Agriculture"
+  }
+}
+
