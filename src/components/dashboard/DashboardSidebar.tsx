@@ -41,8 +41,8 @@ export function DashboardSidebar({ isOpen, onClose }: DashboardSidebarProps) {
       status: 'Active',
     },
     {
-      title: t('dashboard.myFarms', 'My Farms'),
-      href: '/dashboard/my-farms',
+      title: t('dashboard.myFarms', 'Farms & Land'),
+      href: '/dashboard/farms',
       icon: MapPin,
       status: 'Active',
     },
@@ -157,7 +157,10 @@ export function DashboardSidebar({ isOpen, onClose }: DashboardSidebarProps) {
 
           {navigationItems.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname === item.href;
+            const isActive =
+              item.href === '/dashboard'
+                ? pathname === '/dashboard'
+                : pathname === item.href || pathname.startsWith(`${item.href}/`);
             const isUpcoming = item.status === 'Upcoming';
 
             return (

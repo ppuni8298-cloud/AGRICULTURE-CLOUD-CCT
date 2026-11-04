@@ -9,9 +9,10 @@ interface ModalProps {
   title: string;
   subtitle?: string;
   children: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-export function Modal({ isOpen, onClose, title, subtitle, children }: ModalProps) {
+export function Modal({ isOpen, onClose, title, subtitle, children, size = 'md' }: ModalProps) {
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose();
@@ -28,6 +29,15 @@ export function Modal({ isOpen, onClose, title, subtitle, children }: ModalProps
 
   if (!isOpen) return null;
 
+  const maxWidthClass =
+    size === 'sm'
+      ? 'max-w-md'
+      : size === 'lg'
+      ? 'max-w-3xl'
+      : size === 'xl'
+      ? 'max-w-5xl'
+      : 'max-w-2xl';
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
@@ -38,7 +48,9 @@ export function Modal({ isOpen, onClose, title, subtitle, children }: ModalProps
       />
 
       {/* Dialog content */}
-      <div className="relative w-full max-w-2xl rounded-3xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800 shadow-2xl p-6 sm:p-8 z-10 transition-all">
+      <div
+        className={`relative w-full ${maxWidthClass} rounded-3xl bg-white dark:bg-[#0A2920] border border-emerald-100 dark:border-emerald-800 shadow-2xl p-6 sm:p-8 z-10 transition-all`}
+      >
         <div className="flex items-start justify-between gap-4 pb-4 border-b border-emerald-100 dark:border-emerald-800/60">
           <div>
             <h3 className="text-xl sm:text-2xl font-bold text-emerald-950 dark:text-emerald-100">
