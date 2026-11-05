@@ -76,8 +76,8 @@
   },
   "mandi": {
     "badge": "ਮੰਡੀ ਜਾਣਕਾਰੀ ਪੂਰਵ ਦਰਸ਼ਨ",
-    "title": "ਆਲ-ਇੰਡੀਆ ਮੰਡੀ ਭਾਅ ਐਕਸਪਲੋਰਰ",
-    "subtitle": "ਕਿਸਾਨਾਂ ਨੂੰ ਸਹੀ ਮੁੱਲ ਮਿਲ ਸਕੇ ਇਸ ਲਈ ਮੰਡੀ ਭਾਵਾਂ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ।",
+    "title": "ਮੰਡੀ ਭਾਅ ਅਤੇ ਵਿਸ਼ਲੇਸ਼ਣ",
+    "subtitle": "ਮੰਡੀ ਭਾਅ ਅਤੇ ਕੁੱਲ ਕਮਾਈ ਦੀ ਗਣਨਾ ਕਰੋ।",
     "disclaimer": "ਨਮੂਨਾ ਰਿਕਾਰਡ: ਅਸਲ ਵਰਜ਼ਨ ਵਿੱਚ ਈ-ਨਾਮ ਅਤੇ ਐਗਮਾਰਕਨੈੱਟ ਸਿੱਧਾ ਜੁੜੇਗਾ।",
     "selectCommodity": "ਫਸਲ ਚੁਣੋ",
     "selectState": "ਰਾਜ ਚੁਣੋ",
@@ -87,7 +87,11 @@
     "maxPrice": "ਵੱਧ ਤੋਂ ਵੱਧ ਭਾਅ",
     "modalPrice": "ਮਾਡਲ ਭਾਅ",
     "unit": "₹ / ਕੁਇੰਟਲ",
-    "reportedOn": "ਮਿਤੀ"
+    "reportedOn": "ਮਿਤੀ",
+    "comparison": "ਭਾਅ ਤੁਲਨਾ",
+    "analytics": "ਇਤਿਹਾਸਕ ਰੁਝਾਨ",
+    "transport": "ਆਵਾਜਾਈ ਕੈਲਕੁਲੇਟਰ",
+    "advisor": "ਵੇਚਣ ਸਲਾਹਕਾਰ"
   },
   "howItWorks": {
     "badge": "ਸੌਖੇ ਕਦਮ",
@@ -150,7 +154,7 @@
     "cropDoctor": "ਕ੍ਰੌਪ ਡਾਕਟਰ",
     "smartMonitoring": "ਸਮਾਰਟ ਨਿਗਰਾਨੀ",
     "weather": "ਮੌਸਮ ਜਾਣਕਾਰੀ",
-    "mandiIntelligence": "ਮੰਡੀ ਜਾਣਕਾਰੀ",
+    "mandiIntelligence": "ਮੰਡੀ ਭਾਅ ਜਾਣਕਾਰੀ",
     "digitalTwin": "ਡਿਜੀਟਲ ਫਾਰਮ ਟਵਿਨ",
     "reports": "ਰਿਪੋਰਟਾਂ ਅਤੇ ਵਿਸ਼ਲੇਸ਼ਣ",
     "marketplace": "ਖੇਤੀ ਮੰਡੀ",
@@ -170,7 +174,23 @@
     "upcomingModule": "ਅਗਲੇ ਪੜਾਅ ਵਿੱਚ ਆ ਰਿਹਾ ਹੈ",
     "emptyFarmsTitle": "ਅਜੇ ਕੋਈ ਖੇਤ ਨਹੀਂ ਜੋੜਿਆ ਗਿਆ",
     "emptyFarmsDesc": "ਨਮੀ ਅਤੇ ਮੌਸਮ ਦੀ ਨਿਗਰਾਨੀ ਲਈ ਆਪਣਾ ਪਹਿਲਾ ਖੇਤ ਸ਼ਾਮਲ ਕਰੋ।",
-    "viewAll": "ਸਭ ਦੇਖੋ"
+    "viewAll": "ਸਭ ਦੇਖੋ",
+    "virtualSensors": "ਵਰਚੁਅਲ ਆਈਓਟੀ ਸੈਂਸਰ",
+    "thresholdAlerts": "ਚੇਤਾਵਨੀਆਂ",
+    "irrigationAdvisor": "ਸਮਾਰਟ ਸਿੰਚਾਈ ਸਲਾਹਕਾਰ",
+    "simulatedNotice": "ਸਿਮੂਲੇਟਡ ਆਈਓਟੀ ਡਾਟਾ – ਭੌਤਿਕ ਹਾਰਡਵੇਅਰ ਨਹੀਂ",
+    "mandiComparison": "ਭਾਅ ਤੁਲਨਾ",
+    "mandiAnalytics": "ਭਾਅ ਦੇ ਰੁਝਾਨ",
+    "transportCalculator": "ਆਵਾਜਾਈ ਅਤੇ ਮੁਨਾਫਾ ਕੈਲਕੁਲੇਟਰ",
+    "sellingAdvisor": "ਵੇਚਣ ਸਲਾਹਕਾਰ",
+    "satellite": "ਸੈਟੇਲਾਈਟ ਫਸਲ ਨਿਗਰਾਨੀ",
+    "droneAnalytics": "ਡਰੋਨ ਚਿੱਤਰ ਵਿਸ਼ਲੇਸ਼ਣ",
+    "farmSimulator": "ਫਾਰਮ ਸਿਮੂਲੇਟਰ",
+    "geospatial": "ਭੂਗੋਲਿਕ ਸੀਮਾਵਾਂ",
+    "predictiveAnalytics": "ਭਵਿੱਖਬਾਣੀ ਵਿਸ਼ਲੇਸ਼ਣ",
+    "cropRecommendation": "ਫ਼ਸਲ ਸਿਫਾਰਸ਼",
+    "yieldPrediction": "ਝਾੜ ਭਵਿੱਖਬਾਣੀ",
+    "aiInsights": "AI ਸੂਝ"
   },
   "contact": {
     "badge": "ਸੰਪਰਕ ਕਰੋ",
@@ -196,5 +216,31 @@
     "security": "ਸੁਰੱਖਿਆ & RLS",
     "contact": "ਸੰਪਰਕ ਕਰੋ",
     "designedFor": "ਭਾਰਤੀ ਖੇਤੀਬਾੜੀ ਨੂੰ ਸਮਰਪਿਤ"
+  },
+  "digitalTwin": {
+    "title": "ਡਿਜੀਟਲ ਫਾਰਮ ਟਵਿਨ",
+    "subtitle": "ਸੀਮਾਵਾਂ ਅਤੇ ਸੈਂਸਰ ਨਿਗਰਾਨੀ।",
+    "satellite": "ਸੈਟੇਲਾਈਟ ਜਾਣਕਾਰੀ",
+    "drone": "ਡਰੋਨ ਵਿਸ਼ਲੇਸ਼ਣ",
+    "simulator": "ਸਿਮੂਲੇਟਰ",
+    "geospatial": "ਭੂਗੋਲਿਕ ਸੀਮਾਵਾਂ",
+    "predictive": "ਭਵਿੱਖਬਾਣੀ ਵਿਸ਼ਲੇਸ਼ਣ"
+  },
+  "monitoring": {
+    "title": "ਸਮਾਰਟ ਆਈਓਟੀ ਅਤੇ ਮੌਸਮ ਨਿਗਰਾਨੀ",
+    "subtitle": "ਸਾਫਟਵੇਅਰ ਸੈਂਸਰ ਅਤੇ ਮੌਸਮ ਦੀਆਂ ਭਵਿੱਖਬਾਣੀਆਂ।",
+    "simulatedDisclaimer": "ਸਿਮੂਲੇਟਡ ਆਈਓਟੀ ਡਾਟਾ – ਭੌਤਿਕ ਹਾਰਡਵੇਅਰ ਨਹੀਂ।",
+    "soilMoisture": "ਮਿੱਟੀ ਦੀ ਨਮੀ",
+    "soilTemperature": "ਮਿੱਟੀ ਦਾ ਤਾਪਮਾਨ",
+    "airTemperature": "ਹਵਾ ਦਾ ਤਾਪਮਾਨ",
+    "airHumidity": "ਹਵਾ ਦੀ ਨਮੀ",
+    "soilPh": "ਮਿੱਟੀ ਦਾ ਪੀਐਚ",
+    "rainfall": "ਮੀਂਹ",
+    "windSpeed": "ਹਵਾ ਦੀ ਗਤੀ",
+    "lightIntensity": "ਰੌਸ਼ਨੀ ਦੀ ਤੀਬਰਤਾ",
+    "simulationControl": "ਕੰਟਰੋਲ",
+    "manualEntry": "ਮੈਨੂਅਲ ਐਂਟਰੀ",
+    "csvImport": "ਸੀਐਸਵੀ ਇੰਪੋਰਟ",
+    "anomalyInjection": "ਟੈਸਟ ਤਬਦੀਲੀ"
   }
 }

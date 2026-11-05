@@ -352,11 +352,10 @@ export default function DroneAnalyticsPage() {
                   <div
                     key={u.id}
                     onClick={() => setSelectedUploadId(u.id)}
-                    className={`p-3 rounded-xl border text-xs cursor-pointer transition ${
-                      isSelected
+                    className={`p-3 rounded-xl border text-xs cursor-pointer transition ${isSelected
                         ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 shadow-xs'
                         : 'bg-gray-50/50 dark:bg-gray-800/40 border-gray-200 dark:border-gray-800 hover:bg-gray-100'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-between font-bold text-gray-900 dark:text-white">
                       <span className="truncate max-w-[180px]">{u.file_name}</span>

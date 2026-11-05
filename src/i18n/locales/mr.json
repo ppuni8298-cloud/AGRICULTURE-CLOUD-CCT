@@ -76,8 +76,8 @@
   },
   "mandi": {
     "badge": "बाजारभाव पूर्वावलोकन",
-    "title": "अखिल भारतीय कृषी उत्पन्न बाजारभाव",
-    "subtitle": "शेतकऱ्यांना शेतमालाचा योग्य भाव मिळण्यासाठी बाजार विश्लेषण.",
+    "title": "बाजार भाव आणि माहिती",
+    "subtitle": "एपीएमसी बाजारातील भाव आणि नफ्याची गणना करा.",
     "disclaimer": "नमुना नोंदी: आगामी आवृत्तीत ई-नाम आणि ॲगमार्कनेट थेट जोडले जाईल.",
     "selectCommodity": "पीक निवडा",
     "selectState": "राज्य निवडा",
@@ -87,7 +87,11 @@
     "maxPrice": "कमाल भाव",
     "modalPrice": "सरासरी भाव",
     "unit": "₹ / क्विंटल",
-    "reportedOn": "नोंद तारीख"
+    "reportedOn": "नोंद तारीख",
+    "comparison": "भाव तुलना",
+    "analytics": "ऐतिहासिक कल",
+    "transport": "वाहतूक कॅल्क्युलेटर",
+    "advisor": "विक्री सल्लागार"
   },
   "howItWorks": {
     "badge": "सोपी प्रक्रिया",
@@ -150,7 +154,7 @@
     "cropDoctor": "क्रॉप डॉक्टर",
     "smartMonitoring": "स्मार्ट मॉनिटरिंग",
     "weather": "हवामान अंदाज",
-    "mandiIntelligence": "बाजारभाव माहिती",
+    "mandiIntelligence": "बाजार भाव आणि बुद्धिमत्ता",
     "digitalTwin": "डिजिटल फार्म ट्विन",
     "reports": "अहवाल आणि विश्लेषण",
     "marketplace": "कृषी बाजारपेठ",
@@ -170,7 +174,23 @@
     "upcomingModule": "पुढील टप्प्यात येत आहे",
     "emptyFarmsTitle": "अद्याप कोणतीही शेती जोडलेली नाही",
     "emptyFarmsDesc": "हवामान आणि जमिनीतील ओलावा तपासण्यासाठी पहिले शेत जोडा.",
-    "viewAll": "सर्व पहा"
+    "viewAll": "सर्व पहा",
+    "virtualSensors": "व्हर्च्युअल आयओटी सेन्सर्स",
+    "thresholdAlerts": "मर्यादा सूचना",
+    "irrigationAdvisor": "स्मार्ट सिंचन सल्लागार",
+    "simulatedNotice": "सिम्युलेटेड आयओटी डेटा – प्रत्यक्ष हार्डवेअर नाही",
+    "mandiComparison": "भाव तुलना",
+    "mandiAnalytics": "मूल्य कल आणि अस्थिरता",
+    "transportCalculator": "वाहतूक आणि नफा कॅल्क्युलेटर",
+    "sellingAdvisor": "विक्री सल्लागार",
+    "satellite": "उपग्रह पीक निरीक्षण",
+    "droneAnalytics": "ड्रोन प्रतिमा विश्लेषण",
+    "farmSimulator": "शेत सिम्युलेटर",
+    "geospatial": "भौगोलिक सीमा",
+    "predictiveAnalytics": "पूर्वानुमानित विश्लेषण",
+    "cropRecommendation": "पीक शिफारस",
+    "yieldPrediction": "उत्पादन अंदाज",
+    "aiInsights": "AI अंतर्दृष्टी"
   },
   "contact": {
     "badge": "संपर्क",
@@ -196,5 +216,31 @@
     "security": "सुरक्षा व RLS",
     "contact": "संपर्क साधा",
     "designedFor": "भारतीय शेतीसाठी समर्पित"
+  },
+  "digitalTwin": {
+    "title": "डिजिटल फार्म ट्विन",
+    "subtitle": "परस्परसंवादी सीमा आणि निरीक्षण.",
+    "satellite": "उपग्रह माहिती",
+    "drone": "ड्रोन विश्लेषण",
+    "simulator": "सिम्युलेटर",
+    "geospatial": "भौगोलिक सीमा",
+    "predictive": "पूर्वानुमानित विश्लेषण"
+  },
+  "monitoring": {
+    "title": "स्मार्ट आयओटी आणि हवामान निरीक्षण",
+    "subtitle": "सॉफ्टवेअर-मॉडेल टेलिमेट्री आणि हवामान अंदाज.",
+    "simulatedDisclaimer": "सिम्युलेटेड आयओटी डेटा – प्रत्यक्ष हार्डवेअर नाही.",
+    "soilMoisture": "मातीचा ओलावा",
+    "soilTemperature": "मातीचे तापमान",
+    "airTemperature": "हवेचे तापमान",
+    "airHumidity": "हवेतील आर्द्रता",
+    "soilPh": "मातीचा सामू (pH)",
+    "rainfall": "पाऊस",
+    "windSpeed": "वाऱ्याचा वेग",
+    "lightIntensity": "प्रकाशाची तीव्रता",
+    "simulationControl": "नियंत्रण",
+    "manualEntry": "मॅन्युअल नोंद",
+    "csvImport": "सीएसव्ही आयात",
+    "anomalyInjection": "चाचणी बदल"
   }
 }

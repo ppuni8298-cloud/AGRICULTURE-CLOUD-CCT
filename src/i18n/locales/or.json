@@ -76,8 +76,8 @@
   },
   "mandi": {
     "badge": "ମଣ୍ଡି ସୂଚନା ପୂର୍ବାବଲୋକନ",
-    "title": "ସର୍ବଭାରତୀୟ ମଣ୍ଡି ଦର",
-    "subtitle": "କୃଷକଙ୍କୁ ଉଚିତ ମୂଲ୍ୟ ପ୍ରଦାନ ପାଇଁ ବଜାର ବିଶ୍ଳେଷଣ।",
+    "title": "ମଣ୍ଡି ଦର ଓ ବିଶ୍ଳେଷଣ",
+    "subtitle": "ମଣ୍ଡି ଦର ଏବଂ ନିଟ୍ ଲାଭ ଟ୍ରାକ୍ କରନ୍ତୁ।",
     "disclaimer": "ନମୁନା ତଥ୍ୟ: ଆଗାମୀ ସଂସ୍କରଣରେ ଇ-ନାମ୍ ସିଧାସଳଖ ଯୋଡ଼ାଯିବ।",
     "selectCommodity": "ଫସଲ ବାଛନ୍ତୁ",
     "selectState": "ରାଜ୍ୟ ବାଛନ୍ତୁ",
@@ -87,7 +87,11 @@
     "maxPrice": "ସର୍ବାଧିକ ଦର",
     "modalPrice": "ମଡାଲ ଦର",
     "unit": "₹ / କ୍ୱିଣ୍ଟାଲ",
-    "reportedOn": "ତାରିଖ"
+    "reportedOn": "ତାରିଖ",
+    "comparison": "ଦର ତୁଳନା",
+    "analytics": "ଐତିହାସିକ ଧାରା",
+    "transport": "ପରିବହନ କାଲକୁଲେଟର",
+    "advisor": "ବିକ୍ରୟ ପରାମର୍ଶଦାତା"
   },
   "howItWorks": {
     "badge": "ସହଜ ପଦକ୍ଷେପ",
@@ -150,7 +154,7 @@
     "cropDoctor": "କ୍ରପ୍ ଡାକ୍ତର",
     "smartMonitoring": "ସ୍ମାର୍ଟ ମନିଟରିଂ",
     "weather": "ପାଣିପାଗ ସୂଚନା",
-    "mandiIntelligence": "ମଣ୍ଡି ସୂଚନା",
+    "mandiIntelligence": "ମଣ୍ଡି ଦର ସୂଚନା",
     "digitalTwin": "ଡିଜିଟାଲ୍ ଫାର୍ମ ଟ୍ୱିନ୍",
     "reports": "ରିପୋର୍ଟ ଏବଂ ବିଶ୍ଳେଷଣ",
     "marketplace": "କୃଷି ବଜାର",
@@ -170,7 +174,23 @@
     "upcomingModule": "ପରବର୍ତ୍ତୀ ପର୍ଯ୍ୟାୟରେ ଆସୁଛି",
     "emptyFarmsTitle": "କୌଣସି ଜମି ଯୋଡ଼ା ଯାଇନାହିଁ",
     "emptyFarmsDesc": "ନିରୀକ୍ଷଣ ଆରମ୍ଭ କରିବା ପାଇଁ ପ୍ରଥମ ଜମି ଯୋଡ଼ନ୍ତୁ।",
-    "viewAll": "ସବୁ ଦେଖନ୍ତୁ"
+    "viewAll": "ସବୁ ଦେଖନ୍ତୁ",
+    "virtualSensors": "ଭର୍ଚୁଆଲ୍ ଆଇଓଟି ସେନ୍ସର୍",
+    "thresholdAlerts": "ସତର୍କତା",
+    "irrigationAdvisor": "ସ୍ମାର୍ଟ ଜଳସେଚନ ପରାମର୍ଶଦାତା",
+    "simulatedNotice": "ସିମୁଲେଟେଡ୍ ଆଇଓଟି ଡାଟା – ହାର୍ଡୱେର୍ ନୁହେଁ",
+    "mandiComparison": "ଦର ତୁଳନା",
+    "mandiAnalytics": "ଦର ଧାରା",
+    "transportCalculator": "ପରିବହନ ଏବଂ ଲାଭ କାଲକୁଲେଟର",
+    "sellingAdvisor": "ବିକ୍ରୟ ପରାମର୍ଶଦାତା",
+    "satellite": "ଉପଗ୍ରହ ଫସଲ ନିରୀକ୍ଷଣ",
+    "droneAnalytics": "ଡ୍ରୋନ୍ ଚିତ୍ର ବିଶ୍ଳେଷଣ",
+    "farmSimulator": "ଫାର୍ମ ସିମୁଲେଟର",
+    "geospatial": "ଭୌଗୋଳିକ ସୀମା",
+    "predictiveAnalytics": "ପୂର୍ବାନୁମାନ ବିଶ୍ଳେଷଣ",
+    "cropRecommendation": "ଫସଲ ସୁପାରିଶ",
+    "yieldPrediction": "ଅମଳ ପୂର୍ବାନୁମାନ",
+    "aiInsights": "AI ଅନ୍ତର୍ଦୃଷ୍ଟି"
   },
   "contact": {
     "badge": "ଯୋଗାଯୋଗ",
@@ -196,5 +216,31 @@
     "security": "ସୁରକ୍ଷା & RLS",
     "contact": "ଯୋଗାଯୋଗ",
     "designedFor": "ଭାରତୀୟ କୃଷି ପାଇଁ ଉତ୍ସର୍ଗୀକୃତ"
+  },
+  "digitalTwin": {
+    "title": "ଡିଜିଟାଲ୍ ଫାର୍ମ ଟ୍ୱିନ୍",
+    "subtitle": "ସୀମା ଏବଂ ସେନ୍ସର ନିରୀକ୍ଷଣ।",
+    "satellite": "ଉପଗ୍ରହ ସୂଚନା",
+    "drone": "ଡ୍ରୋନ୍ ବିଶ୍ଳେଷଣ",
+    "simulator": "ସିମୁଲେଟର",
+    "geospatial": "ସୀମା",
+    "predictive": "ପୂର୍ବାନୁମାନ ବିଶ୍ଳେଷଣ"
+  },
+  "monitoring": {
+    "title": "ସ୍ମାର୍ଟ ଆଇଓଟି ଓ ପାଣିପାଗ ନିରୀକ୍ଷଣ",
+    "subtitle": "ସଫ୍ଟୱେର୍ ଆଧାରିତ ଟେଲିମେଟ୍ରି ଏବଂ ପାଣିପାଗ ପୂର୍ବାନୁମାନ।",
+    "simulatedDisclaimer": "ସିମୁଲେଟେଡ୍ ଆଇଓଟି ଡାଟା – ହାର୍ଡୱେର୍ ନୁହେଁ।",
+    "soilMoisture": "ମାଟିର ଆର୍ଦ୍ରତା",
+    "soilTemperature": "ମାଟିର ତାପମାତ୍ରା",
+    "airTemperature": "ବାୟୁ ତାପମାତ୍ରା",
+    "airHumidity": "ବାୟୁ ଆର୍ଦ୍ରତା",
+    "soilPh": "ମାଟି ପିଏଚ୍",
+    "rainfall": "ବର୍ଷା",
+    "windSpeed": "ପବନର ଗତି",
+    "lightIntensity": "ଆଲୋକ ତୀବ୍ରତା",
+    "simulationControl": "ନିୟନ୍ତ୍ରଣ",
+    "manualEntry": "ମାନୁଆଲ୍ ପ୍ରବେଶ",
+    "csvImport": "ସିଏସଭି ଆମଦାନୀ",
+    "anomalyInjection": "ପରୀକ୍ଷା ପରିବର୍ତ୍ତନ"
   }
 }

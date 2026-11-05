@@ -76,8 +76,8 @@
   },
   "mandi": {
     "badge": "બજાર ભાવ પ્રિવ્યૂ",
-    "title": "ઓલ ઇન્ડિયા મંડી ભાવ એક્સપ્લોરર",
-    "subtitle": "ખેડૂતોને યોગ્ય ભાવ મળે તે માટે એપીએમસી બજાર વિશ્લેષણ.",
+    "title": "બજાર ભાવ માહિતી",
+    "subtitle": "એપીએમસી બજાર ભાવ અને નફાની ગણતરી કરો.",
     "disclaimer": "ડેમો રેકોર્ડ્સ: વાસ્તવિક વર્ઝનમાં ઇ-નામ અને એગમાર્કનેટ સીધું જોડાશે.",
     "selectCommodity": "પાક પસંદ કરો",
     "selectState": "રાજ્ય પસંદ કરો",
@@ -87,7 +87,11 @@
     "maxPrice": "મહત્તમ ભાવ",
     "modalPrice": "મોડલ ભાવ",
     "unit": "₹ / ક્વિન્ટલ",
-    "reportedOn": "રિપોર્ટ તારીખ"
+    "reportedOn": "રિપોર્ટ તારીખ",
+    "comparison": "ભાવ સરખામણી",
+    "analytics": "ઐતિહાસિક વલણો",
+    "transport": "પરિવહન કેલ્ક્યુલેટર",
+    "advisor": "વેચાણ સલાહકાર"
   },
   "howItWorks": {
     "badge": "સરળ પ્રક્રિયા",
@@ -150,7 +154,7 @@
     "cropDoctor": "ક્રોપ ડૉક્ટર",
     "smartMonitoring": "સ્માર્ટ મોનિટરિંગ",
     "weather": "હવામાન માહિતી",
-    "mandiIntelligence": "બજાર ભાવ",
+    "mandiIntelligence": "બજાર ભાવ માહિતી",
     "digitalTwin": "ડિજિટલ ફાર્મ ટ્વિન",
     "reports": "અહેવાલો અને વિશ્લેષણ",
     "marketplace": "કૃષિ બજાર",
@@ -170,7 +174,23 @@
     "upcomingModule": "આગામી તબક્કામાં આવી રહ્યું છે",
     "emptyFarmsTitle": "હજી સુધી કોઈ ખેતર ઉમેર્યું નથી",
     "emptyFarmsDesc": "ભેજ અને હવામાન ચકાસવા માટે તમારું પ્રથમ ખેતર ઉમેરો.",
-    "viewAll": "બધા જુઓ"
+    "viewAll": "બધા જુઓ",
+    "virtualSensors": "વર્ચ્યુઅલ આઇઓટી સેન્સર્સ",
+    "thresholdAlerts": "ચેતવણીઓ",
+    "irrigationAdvisor": "સ્માર્ટ સિંચાઈ સલાહકાર",
+    "simulatedNotice": "સિમ્યુલેટેડ આઇઓટી ડેટા – ભૌતિક હાર્ડવેર નથી",
+    "mandiComparison": "ભાવ સરખામણી",
+    "mandiAnalytics": "ભાવ વલણો",
+    "transportCalculator": "પરિવહન અને નફો કેલ્ક્યુલેટર",
+    "sellingAdvisor": "વેચાણ સલાહકાર",
+    "satellite": "ઉપગ્રહ પાક નિરીક્ષણ",
+    "droneAnalytics": "ડ્રોન ઇમેજ વિશ્લેષણ",
+    "farmSimulator": "ખેતર સિમ્યુલેટર",
+    "geospatial": "ભૌગોલિક સીમાઓ",
+    "predictiveAnalytics": "આગાહી વિશ્લેષણ",
+    "cropRecommendation": "પાક ભલામણ",
+    "yieldPrediction": "ઉત્પાદન આગાહી",
+    "aiInsights": "AI આંતરદ્રષ્ટિ"
   },
   "contact": {
     "badge": "સંપર્ક કરો",
@@ -196,5 +216,31 @@
     "security": "સુરક્ષા & RLS",
     "contact": "સંપર્ક કરો",
     "designedFor": "ભારતીય કૃષિ માટે સમર્પિત"
+  },
+  "digitalTwin": {
+    "title": "ડિજિટલ ફાર્મ ટ્વિન",
+    "subtitle": "ઇન્ટરેક્ટિવ સીમાઓ અને સેન્સર ઓવરલે.",
+    "satellite": "ઉપગ્રહ માહિતી",
+    "drone": "ડ્રોન વિશ્લેષણ",
+    "simulator": "સિમ્યુલેટર",
+    "geospatial": "ભૌગોલિક સીમાઓ",
+    "predictive": "આગાહી વિશ્લેષણ"
+  },
+  "monitoring": {
+    "title": "સ્માર્ટ આઇઓટી અને હવામાન નિરીક્ષણ",
+    "subtitle": "સોફ્ટવેર-આધારિત સેન્સર્સ અને હવામાન આગાહી.",
+    "simulatedDisclaimer": "સિમ્યુલેટેડ આઇઓટી ડેટા – ભૌતિક હાર્ડવેર નથી.",
+    "soilMoisture": "જમીનનો ભેજ",
+    "soilTemperature": "જમીનનું તાપમાન",
+    "airTemperature": "હવાનું તાપમાન",
+    "airHumidity": "હવામાં ભેજ",
+    "soilPh": "જમીનનો પીએચ",
+    "rainfall": "વરસાદ",
+    "windSpeed": "પવનની ગતિ",
+    "lightIntensity": "પ્રકાશની તીવ્રતા",
+    "simulationControl": "નિયંત્રણ",
+    "manualEntry": "મેન્યુઅલ એન્ટ્રી",
+    "csvImport": "સીએસવી આયાત",
+    "anomalyInjection": "ટેસ્ટ વિસંગતતા"
   }
 }

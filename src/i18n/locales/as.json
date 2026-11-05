@@ -76,8 +76,8 @@
   },
   "mandi": {
     "badge": "বজাৰ দৰ প্ৰিভিউ",
-    "title": "সৰ্বভাৰতীয় মণ্ডী দৰ",
-    "subtitle": "কৃষকে যাতে উচিত মূল্য পায় তাৰ বাবে বজাৰ বিশ্লেষণ।",
+    "title": "বজাৰ দৰ আৰু বিশ্লেষণ",
+    "subtitle": "বজাৰ দৰ আৰু লাভৰ হিচাপ ৰাখক।",
     "disclaimer": "নমুনা তথ্য: অনাগত সংস্কৰণত ই-নাম প্ৰত্যক্ষভাৱে সংযোগ কৰা হ'ব।",
     "selectCommodity": "শস্য বাছক",
     "selectState": "ৰাজ্য বাছক",
@@ -87,7 +87,11 @@
     "maxPrice": "সৰ্বোচ্চ দৰ",
     "modalPrice": "গড় দৰ",
     "unit": "₹ / কুইন্টল",
-    "reportedOn": "তাৰিখ"
+    "reportedOn": "তাৰিখ",
+    "comparison": "দৰ তুলনা",
+    "analytics": "ঐতিহাসিক প্ৰৱণতা",
+    "transport": "পৰিবহণ কেলকুলেটৰ",
+    "advisor": "বিক্ৰী উপদেষ্টা"
   },
   "howItWorks": {
     "badge": "সহজ পদক্ষেপ",
@@ -150,7 +154,7 @@
     "cropDoctor": "ক্ৰপ ডাক্তৰ",
     "smartMonitoring": "স্মাৰ্ট নিৰীক্ষণ",
     "weather": "বতৰৰ তথ্য",
-    "mandiIntelligence": "মণ্ডী তথ্য",
+    "mandiIntelligence": "বজাৰ দৰ তথ্য",
     "digitalTwin": "ডিজিটেল ফাৰ্ম টুইন",
     "reports": "প্ৰতিবেদন আৰু বিশ্লেষণ",
     "marketplace": "কৃষি বজাৰ",
@@ -170,7 +174,23 @@
     "upcomingModule": "পৰৱৰ্তী পৰ্যায়ত আহি আছে",
     "emptyFarmsTitle": "এতিয়ালৈকে কোনো পথাৰ যোগ কৰা হোৱা নাই",
     "emptyFarmsDesc": "বতৰ আৰু মাটিৰ আৰ্দ্ৰতা নিৰীক্ষণ কৰিবলৈ প্ৰথম পথাৰখন যোগ কৰক।",
-    "viewAll": "সকলো চাওক"
+    "viewAll": "সকলো চাওক",
+    "virtualSensors": "ভাৰ্চুৱেল আইঅ'টি চেন্সৰ",
+    "thresholdAlerts": "সীমা সতৰ্কতা",
+    "irrigationAdvisor": "স্মাৰ্ট জলসিঞ্চন উপদেষ্টা",
+    "simulatedNotice": "অনুকৰণ কৰা আইঅ'টি তথ্য – হাৰ্ডৱেৰ নহয়",
+    "mandiComparison": "দৰ তুলনা",
+    "mandiAnalytics": "দৰৰ প্ৰৱণতা",
+    "transportCalculator": "পৰিবহণ আৰু লাভ কেলকুলেটৰ",
+    "sellingAdvisor": "বিক্ৰী সিদ্ধান্ত উপদেষ্টা",
+    "satellite": "উপগ্ৰহ শস্য নিৰীক্ষণ",
+    "droneAnalytics": "ড্ৰোণ চিত্ৰ বিশ্লেষণ",
+    "farmSimulator": "ফাৰ্ম চিমুলেটৰ",
+    "geospatial": "ভৌগোলিক সীমা",
+    "predictiveAnalytics": "ভৱিষ্যদ্বাণীমূলক বিশ্লেষণ",
+    "cropRecommendation": "শস্য পৰামৰ্শ",
+    "yieldPrediction": "উৎপাদন ভৱিষ্যদ্বাণী",
+    "aiInsights": "AI অন্তৰ্দৃষ্টি"
   },
   "contact": {
     "badge": "যোগাযোগ",
@@ -196,5 +216,31 @@
     "security": "সুৰક્ષા & RLS",
     "contact": "যোগাযোগ",
     "designedFor": "ভাৰতীয় কৃষিৰ প্ৰতি সমৰ্পিত"
+  },
+  "digitalTwin": {
+    "title": "ডিজিটেল ফাৰ্ম টুইন",
+    "subtitle": "সীমা আৰু চেন্সৰ নিৰীক্ষণ।",
+    "satellite": "উপগ্ৰহ তথ্য",
+    "drone": "ড্ৰোণ বিশ্লেষণ",
+    "simulator": "চিমুলেটৰ",
+    "geospatial": "ভৌগোলিক সীমা",
+    "predictive": "ভৱিষ্যদ্বাণীমূলক বিশ্লেষণ"
+  },
+  "monitoring": {
+    "title": "স্মাৰ্ট আইঅ'টি আৰু বতৰ নিৰীক্ষণ",
+    "subtitle": "চফট্ৱেৰ-আধাৰিত টেলিমետ্ৰী আৰু বতৰৰ পূৰ্বাভাস।",
+    "simulatedDisclaimer": "অনুকৰণ কৰা আইঅ'টি তথ্য – হাৰ্ডৱেৰ নহয়।",
+    "soilMoisture": "মাটিৰ আৰ্দ্ৰতা",
+    "soilTemperature": "মাটিৰ উষ্ণতা",
+    "airTemperature": "বায়ুৰ উষ্ণতা",
+    "airHumidity": "বায়ুৰ আৰ্দ্ৰতা",
+    "soilPh": "মাটিৰ পিএইচ",
+    "rainfall": "বৰষুণ",
+    "windSpeed": "বতাহৰ গতি",
+    "lightIntensity": "পোহৰৰ তীব্ৰতা",
+    "simulationControl": "নিয়ন্ত্ৰণ",
+    "manualEntry": "মেনুৱেল এন্ট্ৰি",
+    "csvImport": "চিএছভি আমদানি",
+    "anomalyInjection": "পৰীক্ষামূলক পৰিৱৰ্তন"
   }
 }

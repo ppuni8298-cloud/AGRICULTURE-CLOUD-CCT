@@ -1,0 +1,43 @@
+name: AgroCloud AI - Production CI/CD Pipeline
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install pnpm Package Manager
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install Project Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify TypeScript Compilation (Typecheck)
+        run: npx tsc --noEmit
+
+      - name: Execute Automated Integration Test Suite
+        run: pnpm test
+
+      - name: Build Next.js Production Application
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://virqitxonxadugycvdgp.supabase.co' }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_IRUjjh1yZc4HhuGNE6zlLA_3vh64mco' }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || 'sb_publishable_IRUjjh1yZc4HhuGNE6zlLA_3vh64mco' }}
+          NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'http://localhost:3000' }}
+        run: pnpm run build

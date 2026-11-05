@@ -76,8 +76,8 @@
   },
   "mandi": {
     "badge": "বাজার দর প্রিভিউ",
-    "title": "সর্বভারতীয় মান্ডি দর এক্সপ্লোরার",
-    "subtitle": "কৃষকদের ফসলের উপযুক্ত মূল্য নিশ্চিত করতে মান্ডি বিশ্লেষণ।",
+    "title": "বাজার দর ও বিশ্লেষণ",
+    "subtitle": "এপিএমসি বাজার দর এবং নিট লাভের হিসাব রাখুন।",
     "disclaimer": "ডেমো রেকর্ড: চূড়ান্ত সংস্করণে ই-ন্যাম এবং অ্যাগমার্কনেট সরাসরি যুক্ত হবে।",
     "selectCommodity": "ফসল নির্বাচন করুন",
     "selectState": "রাজ্য নির্বাচন করুন",
@@ -87,7 +87,11 @@
     "maxPrice": "সর্বোচ্চ দর",
     "modalPrice": "গড় দর",
     "unit": "₹ / কুইন্টাল",
-    "reportedOn": "তারিখ"
+    "reportedOn": "তারিখ",
+    "comparison": "দর তুলনা",
+    "analytics": "ঐতিহাসিক প্রবণতা",
+    "transport": "পরিবহন ক্যালকুলেটর",
+    "advisor": "বিক্রয় উপদেষ্টা"
   },
   "howItWorks": {
     "badge": "সহজ পদক্ষেপ",
@@ -150,7 +154,7 @@
     "cropDoctor": "ক্রপ ডক্টর",
     "smartMonitoring": "স্মার্ট নজরদারি",
     "weather": "আবহাওয়া তথ্য",
-    "mandiIntelligence": "মান্ডি ইনটেলিজেন্স",
+    "mandiIntelligence": "বাজার দর ও বুদ্ধিমত্তা",
     "digitalTwin": "ডিজিটাল ফার্ম টুইন",
     "reports": "রিপোর্ট ও বিশ্লেষণ",
     "marketplace": "কৃষি বাজার",
@@ -170,7 +174,23 @@
     "upcomingModule": "পরবর্তী পর্যায়ে আসছে",
     "emptyFarmsTitle": "এখনও কোনও খামার যোগ করা হয়নি",
     "emptyFarmsDesc": "আবহাওয়া ও মাটির আর্দ্রতা দেখতে প্রথম খামারটি যোগ করুন।",
-    "viewAll": "সব দেখুন"
+    "viewAll": "সব দেখুন",
+    "virtualSensors": "ভার্চুয়াল আইওটি সেন্সর",
+    "thresholdAlerts": "সীমা সতর্কতা",
+    "irrigationAdvisor": "স্মার্ট সেচ উপদেষ্টা",
+    "simulatedNotice": "সিমুলেটেড আইওটি ডেটা – শারীরিক হার্ডওয়্যার নয়",
+    "mandiComparison": "দর তুলনা",
+    "mandiAnalytics": "দরের প্রবণতা",
+    "transportCalculator": "পরিবহন ও লাভ ক্যালকুলেটর",
+    "sellingAdvisor": "বিক্রয় সিদ্ধান্ত উপদেষ্টা",
+    "satellite": "স্যাটেলাইট ফসল পর্যবেক্ষণ",
+    "droneAnalytics": "ড্রোন চিত্র বিশ্লেষণ",
+    "farmSimulator": "ফার্ম সিমুলেটর",
+    "geospatial": "ভৌগোলিক সীমানা",
+    "predictiveAnalytics": "ভবিষ্যদ্বাণীমূলক বিশ্লেষণ",
+    "cropRecommendation": "ফসল সুপারিশ",
+    "yieldPrediction": "ফলন পূর্বাভাস",
+    "aiInsights": "AI অন্তর্দৃষ্টি"
   },
   "contact": {
     "badge": "যোগাযোগ",
@@ -196,5 +216,31 @@
     "security": "নিরাপত্তা & RLS",
     "contact": "যোগাযোগ",
     "designedFor": "ভারতীয় কৃষির জন্য নিবেদিত"
+  },
+  "digitalTwin": {
+    "title": "ডিজিটাল ফার্ম টুইন",
+    "subtitle": "ইন্টারেক্টিভ সীমানা ও সেন্সর ওভারলে।",
+    "satellite": "স্যাটেলাইট তথ্য",
+    "drone": "ড্রোন বিশ্লেষণ",
+    "simulator": "সিমুলেটর",
+    "geospatial": "ভৌগোলিক সীমানা",
+    "predictive": "ভবিষ্যদ্বাণীমূলক বিশ্লেষণ"
+  },
+  "monitoring": {
+    "title": "স্মার্ট আইওটি ও আবহাওয়া পর্যবেক্ষণ",
+    "subtitle": "সফটওয়্যার-মডেল টেলিমেট্রি এবং আবহাওয়া পূর্বাভাস।",
+    "simulatedDisclaimer": "সিমুলেটেড আইওটি ডেটা – শারীরিক হার্ডওয়্যার নয়।",
+    "soilMoisture": "মাটির আর্দ্রতা",
+    "soilTemperature": "মাটির তাপমাত্রা",
+    "airTemperature": "বায়ুর তাপমাত্রা",
+    "airHumidity": "বায়ুর আর্দ্রতা",
+    "soilPh": "মাটির পিএইচ",
+    "rainfall": "বৃষ্টিপাত",
+    "windSpeed": "বাতাসের গতি",
+    "lightIntensity": "আলোর তীব্রতা",
+    "simulationControl": "নিয়ন্ত্রণ",
+    "manualEntry": "ম্যানুয়াল এন্ট্রি",
+    "csvImport": "সিএসভি আমদানি",
+    "anomalyInjection": "পরীক্ষামূলক পরিবর্তন"
   }
 }

@@ -277,3 +277,4 @@ export const farmSimulatorService = {
     return scenario;
   },
 };
+

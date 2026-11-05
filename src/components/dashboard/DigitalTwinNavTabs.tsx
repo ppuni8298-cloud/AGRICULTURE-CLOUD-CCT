@@ -90,3 +90,4 @@ export function DigitalTwinNavTabs({ activeTab }: DigitalTwinNavTabsProps) {
 }
 
 export default DigitalTwinNavTabs;
+

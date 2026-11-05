@@ -215,3 +215,4 @@ CREATE POLICY "Users can manage own predictive insights"
     ON predictive_insights FOR ALL
     USING (auth.uid() = user_id)
     WITH CHECK (auth.uid() = user_id);
+

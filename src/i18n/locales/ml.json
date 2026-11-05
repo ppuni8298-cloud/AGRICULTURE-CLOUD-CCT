@@ -76,8 +76,8 @@
   },
   "mandi": {
     "badge": "വിപണി വിവരങ്ങൾ പ്രിവ്യൂ",
-    "title": "അഖിലേന്ത്യാ മണ്ടി നിരക്കുകൾ",
-    "subtitle": "കർഷകർക്ക് മികച്ച വില ലഭിക്കുന്നതിനായി വിപണി വിവരങ്ങൾ.",
+    "title": "വിപണി വില വിവരങ്ങൾ",
+    "subtitle": "എപിഎംസി വിപണി നിരക്കുകളും ലാഭവും ട്രാക്ക് ചെയ്യുക.",
     "disclaimer": "മാതൃകാ രേഖകൾ: യഥാർത്ഥ പതിപ്പിൽ ഇ-നാമും ആഗ്മാർക്ക്‌നെറ്റും നേരിട്ട് ബന്ധിപ്പിക്കും.",
     "selectCommodity": "വിള തിരഞ്ഞെടുക്കുക",
     "selectState": "സംസ്ഥാനം തിരഞ്ഞെടുക്കുക",
@@ -87,7 +87,11 @@
     "maxPrice": "കൂടിയ വില",
     "modalPrice": "ശരാശരി വില",
     "unit": "₹ / ക്വിന്റൽ",
-    "reportedOn": "റിപ്പോർട്ട് ചെയ്ത തീയതി"
+    "reportedOn": "റിപ്പോർട്ട് ചെയ്ത തീയതി",
+    "comparison": "വില താരതമ്യം",
+    "analytics": "ചരിത്രപരമായ പ്രവണതകൾ",
+    "transport": "ഗതാഗത കാൽക്കുലേറ്റർ",
+    "advisor": "വിൽപ്പന ഉപദേശകൻ"
   },
   "howItWorks": {
     "badge": "ലളിതമായ ഘട്ടങ്ങൾ",
@@ -150,7 +154,7 @@
     "cropDoctor": "വിള ഡോക്ടർ",
     "smartMonitoring": "സ്മാർട്ട് നിരീക്ഷണം",
     "weather": "കാലാവസ്ഥാ വിവരങ്ങൾ",
-    "mandiIntelligence": "മണ്ടി ഇൻഫർമേഷൻ",
+    "mandiIntelligence": "വിപണി വിവരങ്ങൾ",
     "digitalTwin": "ഡിജിറ്റൽ ഫാം ട്വിൻ",
     "reports": "റിപ്പോർട്ടുകൾ & വിശകലനം",
     "marketplace": "കാർഷിക വിപണി",
@@ -170,7 +174,23 @@
     "upcomingModule": "അടുത്ത ഘട്ടത്തിൽ വരുന്നു",
     "emptyFarmsTitle": "ഫാമുകളൊന്നും ചേർത്തിട്ടില്ല",
     "emptyFarmsDesc": "ഈർപ്പവും കാലാവസ്ഥയും നിരീക്ഷിക്കാൻ നിങ്ങളുടെ ആദ്യത്തെ ഫാം ചേർക്കുക.",
-    "viewAll": "എല്ലാം കാണുക"
+    "viewAll": "എല്ലാം കാണുക",
+    "virtualSensors": "വെർച്വൽ ഐഒടി സെൻസറുകൾ",
+    "thresholdAlerts": "മുന്നറിയിപ്പുകൾ",
+    "irrigationAdvisor": "സ്മാർട്ട് ജലസേചന ഉപദേശകൻ",
+    "simulatedNotice": "സിമുലേറ്റഡ് ഐഒടി ഡാറ്റ – ഹാർഡ്‌വെയറിൽ നിന്നല്ല",
+    "mandiComparison": "വില താരതമ്യം",
+    "mandiAnalytics": "വില പ്രവണതകൾ",
+    "transportCalculator": "ഗതാഗത & ലാഭ കാൽക്കുലേറ്റർ",
+    "sellingAdvisor": "വിൽപ്പന ഉപദേശകൻ",
+    "satellite": "ഉപഗ്രഹ നിരീക്ഷണം",
+    "droneAnalytics": "ഡ്രോൺ വിശകലനം",
+    "farmSimulator": "ഫാം സിമുലേറ്റർ",
+    "geospatial": "ഭൂമിശാസ്ത്രപരമായ അതിരുകൾ",
+    "predictiveAnalytics": "പ്രവചന വിശകലനം",
+    "cropRecommendation": "വിള ശുപാർശ",
+    "yieldPrediction": "വിളവ് പ്രവചനം",
+    "aiInsights": "AI സ്ഥിതിവിവരക്കണക്കുകൾ"
   },
   "contact": {
     "badge": "ബന്ധപ്പെടുക",
@@ -196,5 +216,31 @@
     "security": "സുരക്ഷ & RLS",
     "contact": "ബന്ധപ്പെടുക",
     "designedFor": "ഇന്ത്യൻ കൃഷിക്കായി സമർപ്പിതം"
+  },
+  "digitalTwin": {
+    "title": "ഡിജിറ്റൽ ഫാം ട്വിൻ",
+    "subtitle": "അതിരുകളും സെൻസർ ഓവർലേകളും.",
+    "satellite": "ഉപഗ്രഹ വിവരങ്ങൾ",
+    "drone": "ഡ്രോൺ വിശകലനം",
+    "simulator": "സിമുലേറ്റർ",
+    "geospatial": "അതിരുകൾ",
+    "predictive": "പ്രവചന വിശകലനം"
+  },
+  "monitoring": {
+    "title": "സ്മാർട്ട് ഐഒടി & കാലാവസ്ഥാ നിരീക്ഷണം",
+    "subtitle": "സോഫ്റ്റ്‌വെയർ അധിഷ്ഠിത സെൻസറുകളും കാലാവസ്ഥാ പ്രവചനങ്ങളും.",
+    "simulatedDisclaimer": "സിമുലേറ്റഡ് ഐഒടി ഡാറ്റ – ഹാർഡ്‌വെയറിൽ നിന്നല്ല.",
+    "soilMoisture": "മണ്ണിലെ ഈർപ്പം",
+    "soilTemperature": "മണ്ണിലെ താപനില",
+    "airTemperature": "വായു താപനില",
+    "airHumidity": "വായു ഈർപ്പം",
+    "soilPh": "മണ്ണ് പിഎച്ച്",
+    "rainfall": "മഴ",
+    "windSpeed": "കാറ്റിന്റെ വേഗത",
+    "lightIntensity": "പ്രകാശ തീവ്രത",
+    "simulationControl": "നിയന്ത്രണം",
+    "manualEntry": "മാനുവൽ എൻട്രി",
+    "csvImport": "സിഎസ്വി ഇമ്പോർട്ട്",
+    "anomalyInjection": "ടെസ്റ്റ് വ്യതിയാനം"
   }
 }
