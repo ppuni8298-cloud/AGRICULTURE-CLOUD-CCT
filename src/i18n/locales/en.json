@@ -177,7 +177,20 @@
     "virtualSensors": "Virtual IoT Sensors",
     "thresholdAlerts": "Threshold Alerts",
     "irrigationAdvisor": "Smart Irrigation Advisor",
-    "simulatedNotice": "SIMULATED IoT DATA – NOT FROM PHYSICAL HARDWARE"
+    "simulatedNotice": "SIMULATED IoT DATA – NOT FROM PHYSICAL HARDWARE",
+    "mandiIntelligence": "Mandi Intelligence",
+    "mandiComparison": "Price Comparison",
+    "mandiAnalytics": "Price Trends & Volatility",
+    "transportCalculator": "Freight & Net Profit Calculator",
+    "sellingAdvisor": "Selling Decision Advisor"
+  },
+  "mandi": {
+    "title": "Mandi Intelligence & Price Analytics",
+    "subtitle": "Track APMC market rates, compare price spreads, analyze price volatility and calculate net farmer realization.",
+    "comparison": "Mandi Price Comparison",
+    "analytics": "Historical Price Analytics",
+    "transport": "Transportation Cost & Net Profit Calculator",
+    "advisor": "Farmer Selling Decision Advisor"
   },
   "monitoring": {
     "title": "Smart IoT & Micro-Weather Monitoring",

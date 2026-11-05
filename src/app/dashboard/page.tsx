@@ -778,14 +778,42 @@ export default function DashboardOverviewPage() {
               ))}
             </div>
 
-            <div className="mt-4 pt-3 border-t border-emerald-100/70 dark:border-emerald-800/50 text-center">
-              <Link
-                href="/dashboard/mandi"
-                className="text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 inline-flex items-center gap-1"
-              >
-                <span>Explore all 28 Indian State Mandis</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+            <div className="mt-4 pt-3 border-t border-emerald-100/70 dark:border-emerald-800/50 space-y-2">
+              <div className="grid grid-cols-2 gap-2 text-center">
+                <Link
+                  href="/dashboard/mandi/comparison"
+                  className="px-2.5 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-[11px] font-bold text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition"
+                >
+                  Price Comparison
+                </Link>
+                <Link
+                  href="/dashboard/mandi/analytics"
+                  className="px-2.5 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-[11px] font-bold text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition"
+                >
+                  Price Trends
+                </Link>
+                <Link
+                  href="/dashboard/mandi/transport-calculator"
+                  className="px-2.5 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-[11px] font-bold text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 transition"
+                >
+                  Freight & Net Profit
+                </Link>
+                <Link
+                  href="/dashboard/mandi/advisor"
+                  className="px-2.5 py-1.5 rounded-xl bg-emerald-600 text-[11px] font-bold text-white hover:bg-emerald-700 transition"
+                >
+                  Selling Advisor
+                </Link>
+              </div>
+              <div className="text-center pt-1">
+                <Link
+                  href="/dashboard/mandi"
+                  className="text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-emerald-800 inline-flex items-center gap-1"
+                >
+                  <span>Explore all 28 Indian State Mandis</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

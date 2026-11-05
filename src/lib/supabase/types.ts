@@ -448,6 +448,126 @@ export interface AIFarmInsight {
   created_at: string;
 }
 
+// ==============================================================================
+// PHASE 5: MANDI INTELLIGENCE, MARKET PRICE ANALYTICS & FARMER SELLING ADVISOR
+// ==============================================================================
+
+export type MandiDataSource =
+  | 'agmarknet_live'
+  | 'agmarknet_daily_benchmark'
+  | 'enam_portal'
+  | 'user_reported';
+
+export type SellingRecommendationType =
+  | 'sell_now'
+  | 'hold_storage'
+  | 'divert_alternate_mandi'
+  | 'monitor_close';
+
+export interface MandiRecordItem {
+  id: string;
+  commodity: string;
+  variety: string;
+  grade: string;
+  state: string;
+  district: string;
+  market: string;
+  min_price: number;
+  max_price: number;
+  modal_price: number;
+  unit: string;
+  arrivals_tonnes?: number;
+  arrival_date: string;
+  data_source: MandiDataSource;
+  is_live: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface MandiPriceHistoryItem {
+  id: string;
+  commodity: string;
+  market: string;
+  state: string;
+  district: string;
+  record_date: string;
+  min_price: number;
+  max_price: number;
+  modal_price: number;
+  arrivals_tonnes?: number;
+  data_source: MandiDataSource;
+  created_at: string;
+}
+
+export interface FarmerMandiWatchlist {
+  id: string;
+  user_id: string;
+  commodity: string;
+  market: string;
+  target_price_alert?: number | null;
+  alert_condition?: 'above' | 'below';
+  created_at: string;
+}
+
+export interface MandiTransportCalculation {
+  id: string;
+  user_id: string;
+  farm_id?: string | null;
+  commodity: string;
+  quantity_quintals: number;
+  destination_market: string;
+  destination_district: string;
+  distance_km: number;
+  vehicle_type: string;
+  freight_cost: number;
+  labor_cost: number;
+  mandi_fees: number;
+  total_expenses: number;
+  gross_revenue: number;
+  net_realized_revenue: number;
+  net_price_per_quintal: number;
+  created_at: string;
+}
+
+export interface MandiComparisonItem {
+  market: string;
+  district: string;
+  state: string;
+  distance_km?: number;
+  modal_price: number;
+  min_price: number;
+  max_price: number;
+  variety: string;
+  grade: string;
+  arrivals_tonnes?: number;
+  arrival_date: string;
+  price_difference_from_best: number;
+  is_highest: boolean;
+  is_lowest: boolean;
+  comparability_note?: string;
+}
+
+export interface SellingAdvisorInsight {
+  commodity: string;
+  current_market: string;
+  current_modal_price: number;
+  thirty_day_moving_average: number;
+  price_trend: 'surging' | 'stable' | 'declining';
+  volatility: 'low' | 'moderate' | 'high';
+  perishability_days: number;
+  recommendation: SellingRecommendationType;
+  confidence_score: number;
+  rationale: string;
+  storage_cost_estimate_per_month: number;
+  suggested_action: string;
+  best_alternate_market?: {
+    market: string;
+    modal_price: number;
+    distance_km: number;
+    net_gain_after_transport: number;
+  };
+}
+
 export type Database = {
   public: {
     Tables: {
@@ -550,6 +670,26 @@ export type Database = {
         Row: AIFarmInsight;
         Insert: Omit<AIFarmInsight, 'id' | 'created_at'>;
         Update: Partial<Omit<AIFarmInsight, 'id' | 'user_id' | 'created_at'>>;
+      };
+      mandi_records: {
+        Row: MandiRecordItem;
+        Insert: Omit<MandiRecordItem, 'id' | 'created_at' | 'updated_at'>;
+        Update: Partial<Omit<MandiRecordItem, 'id' | 'created_at' | 'updated_at'>>;
+      };
+      mandi_price_history: {
+        Row: MandiPriceHistoryItem;
+        Insert: Omit<MandiPriceHistoryItem, 'id' | 'created_at'>;
+        Update: Partial<Omit<MandiPriceHistoryItem, 'id' | 'created_at'>>;
+      };
+      farmer_mandi_watchlists: {
+        Row: FarmerMandiWatchlist;
+        Insert: Omit<FarmerMandiWatchlist, 'id' | 'created_at'>;
+        Update: Partial<Omit<FarmerMandiWatchlist, 'id' | 'user_id' | 'created_at'>>;
+      };
+      mandi_transport_calculations: {
+        Row: MandiTransportCalculation;
+        Insert: Omit<MandiTransportCalculation, 'id' | 'created_at'>;
+        Update: Partial<Omit<MandiTransportCalculation, 'id' | 'user_id' | 'created_at'>>;
       };
     };
   };
