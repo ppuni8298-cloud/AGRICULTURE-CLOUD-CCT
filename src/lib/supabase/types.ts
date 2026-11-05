@@ -568,6 +568,165 @@ export interface SellingAdvisorInsight {
   };
 }
 
+// ==============================================================================
+// PHASE 6: DIGITAL TWIN, SATELLITE, DRONE, SIMULATOR & PREDICTIVE ANALYTICS TYPES
+// ==============================================================================
+
+export type BoundarySourceType = 'survey_verified' | 'farmer_estimated' | 'cadastral_geojson';
+export type SatelliteProviderType = 'sentinel_2' | 'landsat_8' | 'planet' | 'demo_benchmark';
+export type DroneSensorType = 'rgb_standard' | 'multispectral_calibrated' | 'thermal';
+export type PredictiveInsightCategory = 'crop_stress' | 'soil_moisture' | 'weather_risk' | 'water_demand';
+
+export interface GeoJsonPolygon {
+  type: 'Polygon' | 'MultiPolygon';
+  coordinates: number[][][] | number[][][][];
+}
+
+export interface FarmGeometry {
+  id: string;
+  farm_id: string;
+  field_id?: string | null;
+  user_id: string;
+  name: string;
+  boundary_type: BoundarySourceType;
+  geometry_geojson: GeoJsonPolygon;
+  centroid_lat: number;
+  centroid_lng: number;
+  calculated_area_acres: number;
+  elevation_meters?: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SpectralBands {
+  red: number;
+  nir: number;
+  blue?: number;
+  green?: number;
+  re?: number;
+}
+
+export interface SatelliteObservation {
+  id: string;
+  farm_id: string;
+  field_id?: string | null;
+  user_id: string;
+  provider: SatelliteProviderType;
+  acquisition_date: string;
+  cloud_cover_percent: number;
+  ndvi_mean: number;
+  ndvi_min: number;
+  ndvi_max: number;
+  evi_mean?: number | null;
+  spectral_bands_json: SpectralBands;
+  stressed_area_percent: number;
+  image_url?: string | null;
+  is_demo: boolean;
+  created_at: string;
+}
+
+export interface DroneUpload {
+  id: string;
+  farm_id: string;
+  field_id?: string | null;
+  user_id: string;
+  file_name: string;
+  file_url: string;
+  storage_path: string;
+  file_size_bytes: number;
+  mime_type: string;
+  capture_date: string;
+  sensor_type: DroneSensorType;
+  flight_altitude_m?: number | null;
+  notes?: string | null;
+  created_at: string;
+}
+
+export interface DroneVisibleIssue {
+  issue: string;
+  severity: 'low' | 'moderate' | 'high' | 'severe';
+  confidence: number;
+  description: string;
+  location_quadrant?: string;
+}
+
+export interface DroneAnalysis {
+  id: string;
+  upload_id: string;
+  user_id: string;
+  crop_health_score: number;
+  canopy_coverage_percent: number;
+  visible_issues_json: DroneVisibleIssue[];
+  chlorosis_yellowing_detected: boolean;
+  lodging_detected: boolean;
+  weed_infestation_level: 'none' | 'low' | 'moderate' | 'high';
+  ai_model_used: string;
+  recommendations_json: string[];
+  created_at: string;
+}
+
+export interface SimulationParameters {
+  irrigation_mm: number;
+  initial_moisture_pct: number;
+  nitrogen_kg_acre: number;
+  phosphorus_kg_acre: number;
+  potassium_kg_acre: number;
+  growth_stage: string;
+  temp_anomaly_c: number;
+  rainfall_scenario: 'drought' | 'deficit_50' | 'normal' | 'excess_30';
+}
+
+export interface SimulationResults {
+  water_consumption_m3: number;
+  stress_index: number;
+  projected_yield_change_pct: number;
+  expected_yield_range: {
+    min: number;
+    max: number;
+    unit: string;
+  };
+  resource_cost_inr: number;
+  soil_moisture_trend_pct: number[];
+  risk_factors: string[];
+}
+
+export interface FarmSimulationScenario {
+  id: string;
+  farm_id: string;
+  user_id: string;
+  scenario_name: string;
+  crop_type: string;
+  parameters_json: SimulationParameters;
+  results_json: SimulationResults;
+  is_baseline: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PredictiveDataSource {
+  source_type: string;
+  description: string;
+  is_measured: boolean;
+}
+
+export interface PredictiveInsight {
+  id: string;
+  farm_id: string;
+  field_id?: string | null;
+  user_id: string;
+  insight_category: PredictiveInsightCategory;
+  risk_level: 'low' | 'moderate' | 'high' | 'critical';
+  confidence_score: number;
+  horizon_days: number;
+  title: string;
+  summary: string;
+  metrics_json: Record<string, any>;
+  data_sources_json: PredictiveDataSource[];
+  actionable_recommendations: string[];
+  created_at: string;
+}
+
+
 export type Database = {
   public: {
     Tables: {
@@ -690,6 +849,36 @@ export type Database = {
         Row: MandiTransportCalculation;
         Insert: Omit<MandiTransportCalculation, 'id' | 'created_at'>;
         Update: Partial<Omit<MandiTransportCalculation, 'id' | 'user_id' | 'created_at'>>;
+      };
+      farm_geometries: {
+        Row: FarmGeometry;
+        Insert: Omit<FarmGeometry, 'id' | 'created_at' | 'updated_at'>;
+        Update: Partial<Omit<FarmGeometry, 'id' | 'user_id' | 'created_at' | 'updated_at'>>;
+      };
+      satellite_observations: {
+        Row: SatelliteObservation;
+        Insert: Omit<SatelliteObservation, 'id' | 'created_at'>;
+        Update: Partial<Omit<SatelliteObservation, 'id' | 'user_id' | 'created_at'>>;
+      };
+      drone_uploads: {
+        Row: DroneUpload;
+        Insert: Omit<DroneUpload, 'id' | 'created_at'>;
+        Update: Partial<Omit<DroneUpload, 'id' | 'user_id' | 'created_at'>>;
+      };
+      drone_analyses: {
+        Row: DroneAnalysis;
+        Insert: Omit<DroneAnalysis, 'id' | 'created_at'>;
+        Update: Partial<Omit<DroneAnalysis, 'id' | 'user_id' | 'created_at'>>;
+      };
+      farm_simulation_scenarios: {
+        Row: FarmSimulationScenario;
+        Insert: Omit<FarmSimulationScenario, 'id' | 'created_at' | 'updated_at'>;
+        Update: Partial<Omit<FarmSimulationScenario, 'id' | 'user_id' | 'created_at' | 'updated_at'>>;
+      };
+      predictive_insights: {
+        Row: PredictiveInsight;
+        Insert: Omit<PredictiveInsight, 'id' | 'created_at'>;
+        Update: Partial<Omit<PredictiveInsight, 'id' | 'user_id' | 'created_at'>>;
       };
     };
   };

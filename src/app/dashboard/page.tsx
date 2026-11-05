@@ -39,6 +39,8 @@ import {
   Radio,
   ExternalLink,
   Lightbulb,
+  Satellite,
+  Camera,
 } from 'lucide-react';
 
 export default function DashboardOverviewPage() {
@@ -814,6 +816,87 @@ export default function DashboardOverviewPage() {
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
+            </div>
+          </div>
+
+          {/* Phase 6: Digital Farm Intelligence Overview Widget */}
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-900 to-slate-900 text-white shadow-lg border border-emerald-700/60 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2.5 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                  <Layers className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-emerald-300">
+                    Digital Farm Intelligence
+                  </h3>
+                  <p className="text-[11px] text-emerald-200/70">
+                    Spatial Cadastre, Sentinel-2 & Drone Suite
+                  </p>
+                </div>
+              </div>
+
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                Phase 6 Active
+              </span>
+            </div>
+
+            {/* Quick telemetry pill highlights */}
+            <div className="grid grid-cols-2 gap-2 text-xs pt-1">
+              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                <span className="text-[10px] text-emerald-400 block">Canopy NDVI (Sentinel-2)</span>
+                <span className="font-extrabold text-sm block mt-0.5">0.72 (Dense Foliage)</span>
+              </div>
+              <div className="p-2.5 rounded-xl bg-white/5 border border-white/10">
+                <span className="text-[10px] text-emerald-400 block">Plot Boundaries</span>
+                <span className="font-extrabold text-sm block mt-0.5">5.75 Ac (Survey Verified)</span>
+              </div>
+            </div>
+
+            {/* 6 Grid Links */}
+            <div className="grid grid-cols-3 gap-2 text-center pt-1">
+              <Link
+                href="/dashboard/digital-twin"
+                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition text-[11px] font-semibold text-emerald-100 flex flex-col items-center justify-center gap-1"
+              >
+                <Layers className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Digital Twin</span>
+              </Link>
+              <Link
+                href="/dashboard/satellite"
+                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition text-[11px] font-semibold text-emerald-100 flex flex-col items-center justify-center gap-1"
+              >
+                <Satellite className="w-3.5 h-3.5 text-sky-400" />
+                <span>Satellite</span>
+              </Link>
+              <Link
+                href="/dashboard/drone-analytics"
+                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition text-[11px] font-semibold text-emerald-100 flex flex-col items-center justify-center gap-1"
+              >
+                <Camera className="w-3.5 h-3.5 text-purple-400" />
+                <span>Drone Ortho</span>
+              </Link>
+              <Link
+                href="/dashboard/farm-simulator"
+                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition text-[11px] font-semibold text-emerald-100 flex flex-col items-center justify-center gap-1"
+              >
+                <Sliders className="w-3.5 h-3.5 text-amber-400" />
+                <span>Simulator</span>
+              </Link>
+              <Link
+                href="/dashboard/geospatial"
+                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition text-[11px] font-semibold text-emerald-100 flex flex-col items-center justify-center gap-1"
+              >
+                <MapPin className="w-3.5 h-3.5 text-rose-400" />
+                <span>Geospatial</span>
+              </Link>
+              <Link
+                href="/dashboard/predictive-analytics"
+                className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition text-[11px] font-semibold text-emerald-100 flex flex-col items-center justify-center gap-1"
+              >
+                <TrendingUp className="w-3.5 h-3.5 text-emerald-300" />
+                <span>Predictive</span>
+              </Link>
             </div>
           </div>
         </div>

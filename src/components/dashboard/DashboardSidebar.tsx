@@ -24,6 +24,10 @@ import {
   X,
   Sparkles,
   Lightbulb,
+  Satellite,
+  Camera,
+  Sliders,
+  Layers,
 } from 'lucide-react';
 
 interface DashboardSidebarProps {
@@ -110,9 +114,39 @@ export function DashboardSidebar({ isOpen, onClose }: DashboardSidebarProps) {
     },
     {
       title: t('dashboard.digitalTwin', 'Digital Farm Twin'),
-      href: '/dashboard/twin',
-      icon: Cpu,
-      status: 'Upcoming',
+      href: '/dashboard/digital-twin',
+      icon: Layers,
+      status: 'Active',
+    },
+    {
+      title: t('dashboard.satellite', 'Satellite Intelligence'),
+      href: '/dashboard/satellite',
+      icon: Satellite,
+      status: 'Active',
+    },
+    {
+      title: t('dashboard.droneAnalytics', 'Drone Analytics'),
+      href: '/dashboard/drone-analytics',
+      icon: Camera,
+      status: 'Active',
+    },
+    {
+      title: t('dashboard.farmSimulator', 'Farm Simulator'),
+      href: '/dashboard/farm-simulator',
+      icon: Sliders,
+      status: 'Active',
+    },
+    {
+      title: t('dashboard.geospatial', 'Geospatial Boundaries'),
+      href: '/dashboard/geospatial',
+      icon: MapPin,
+      status: 'Active',
+    },
+    {
+      title: t('dashboard.predictiveAnalytics', 'Predictive Analytics'),
+      href: '/dashboard/predictive-analytics',
+      icon: TrendingUp,
+      status: 'Active',
     },
     {
       title: t('dashboard.reports', 'Reports & Analytics'),

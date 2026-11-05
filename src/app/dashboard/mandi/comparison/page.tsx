@@ -331,3 +331,4 @@ export default function MandiComparisonPage() {
     </div>
   );
 }
+

@@ -182,7 +182,21 @@
     "mandiComparison": "Price Comparison",
     "mandiAnalytics": "Price Trends & Volatility",
     "transportCalculator": "Freight & Net Profit Calculator",
-    "sellingAdvisor": "Selling Decision Advisor"
+    "sellingAdvisor": "Selling Decision Advisor",
+    "satellite": "Satellite Intelligence",
+    "droneAnalytics": "Drone Analytics",
+    "farmSimulator": "Farm Simulator",
+    "geospatial": "Geospatial Boundaries",
+    "predictiveAnalytics": "Predictive Analytics"
+  },
+  "digitalTwin": {
+    "title": "Digital Farm Twin & Spatial Simulation",
+    "subtitle": "Interactive cadastral boundaries, telemetry overlays, and spatial vegetative monitoring.",
+    "satellite": "Satellite Intelligence",
+    "drone": "Drone Aerial Analytics",
+    "simulator": "What-If Farm Simulator",
+    "geospatial": "Geospatial GIS Boundaries",
+    "predictive": "Predictive Farm Analytics"
   },
   "mandi": {
     "title": "Mandi Intelligence & Price Analytics",
