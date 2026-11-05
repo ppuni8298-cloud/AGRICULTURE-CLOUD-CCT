@@ -301,6 +301,153 @@ export interface WeatherCache {
   expires_at: string;
 }
 
+// ==============================================================================
+// PHASE 4: AI FARM INTELLIGENCE & MULTILINGUAL ASSISTANT
+// ==============================================================================
+
+export type DiagnosisSeverity = 'low' | 'moderate' | 'high' | 'severe' | 'critical';
+export type InsightPriority = 'high' | 'medium' | 'low';
+export type InsightCategory =
+  | 'irrigation'
+  | 'soil'
+  | 'weather'
+  | 'crop_growth'
+  | 'pest_disease'
+  | 'market'
+  | 'general'
+  | 'fertilizer'
+  | 'harvest';
+
+export interface AIConversation {
+  id: string;
+  user_id: string;
+  title: string;
+  language: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AIMessage {
+  id: string;
+  conversation_id: string;
+  user_id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data_context?: Record<string, any> | null;
+  is_voice?: boolean;
+  created_at: string;
+}
+
+export interface CropDiagnosis {
+  id: string;
+  user_id: string;
+  farm_id?: string | null;
+  field_id?: string | null;
+  crop_name: string;
+  image_url?: string | null;
+  disease_name: string;
+  scientific_name?: string | null;
+  severity: DiagnosisSeverity;
+  confidence: number;
+  visible_symptoms: string[];
+  possible_causes: string[];
+  suggested_steps: string[];
+  prevention_guidance: string[];
+  is_confirmed_diagnosis: boolean;
+  disclaimer: string;
+  created_at: string;
+}
+
+export interface RecommendedCropItem {
+  name?: string;
+  crop_name?: string;
+  scientific_name?: string;
+  variety?: string;
+  recommended_varieties?: string[];
+  suitability_score: number;
+  water_requirement: string;
+  growing_duration?: string;
+  duration_days?: string;
+  suitable_conditions: string;
+  potential_risks: string[];
+  reasons?: string[];
+  estimated_yield?: string;
+  expected_yield?: string;
+  profit_potential: 'High' | 'Medium' | 'Moderate';
+}
+
+export interface CropRecommendation {
+  id: string;
+  user_id: string;
+  farm_id?: string | null;
+  field_id?: string | null;
+  season: string;
+  soil_type: string;
+  soil_ph?: number | null;
+  soil_moisture?: number | null;
+  water_availability?: string | null;
+  top_crop?: string | null;
+  rationale?: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  weather_context?: Record<string, any> | null;
+  recommended_crops: RecommendedCropItem[];
+  created_at: string;
+}
+
+export interface InfluencingFactor {
+  factor: string;
+  impact: 'positive' | 'negative' | 'neutral';
+  weight: number;
+  description: string;
+}
+
+export interface YieldPrediction {
+  id: string;
+  user_id: string;
+  farm_id?: string | null;
+  field_id?: string | null;
+  crop_id?: string | null;
+  crop_name: string;
+  growth_stage: CropGrowthStage;
+  field_area_acres?: number;
+  historical_yield?: number | null;
+  predicted_yield_min?: number;
+  predicted_yield_max?: number;
+  predicted_yield_unit?: string;
+  estimated_min_yield?: number;
+  estimated_max_yield?: number;
+  yield_unit?: string;
+  confidence_score: number;
+  confidence_explanation?: string;
+  uncertainty_explanation?: string;
+  influencing_factors: InfluencingFactor[];
+  missing_data_points?: string[];
+  historical_comparison?: string | null;
+  data_sufficiency_note?: string | null;
+  is_guaranteed?: boolean;
+  disclaimer?: string;
+  created_at: string;
+}
+
+export interface AIFarmInsight {
+  id: string;
+  user_id: string;
+  farm_id?: string | null;
+  field_id?: string | null;
+  title: string;
+  category: InsightCategory;
+  priority: InsightPriority;
+  explanation?: string;
+  description?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supporting_data?: any;
+  suggested_action: string;
+  data_source: string;
+  is_dismissed?: boolean;
+  created_at: string;
+}
+
 export type Database = {
   public: {
     Tables: {
@@ -373,6 +520,36 @@ export type Database = {
         Row: WeatherCache;
         Insert: Omit<WeatherCache, 'id'>;
         Update: Partial<Omit<WeatherCache, 'id' | 'user_id'>>;
+      };
+      ai_conversations: {
+        Row: AIConversation;
+        Insert: Omit<AIConversation, 'id' | 'created_at' | 'updated_at'>;
+        Update: Partial<Omit<AIConversation, 'id' | 'user_id' | 'created_at' | 'updated_at'>>;
+      };
+      ai_messages: {
+        Row: AIMessage;
+        Insert: Omit<AIMessage, 'id' | 'created_at'>;
+        Update: Partial<Omit<AIMessage, 'id' | 'user_id' | 'created_at'>>;
+      };
+      crop_diagnoses: {
+        Row: CropDiagnosis;
+        Insert: Omit<CropDiagnosis, 'id' | 'created_at'>;
+        Update: Partial<Omit<CropDiagnosis, 'id' | 'user_id' | 'created_at'>>;
+      };
+      crop_recommendations: {
+        Row: CropRecommendation;
+        Insert: Omit<CropRecommendation, 'id' | 'created_at'>;
+        Update: Partial<Omit<CropRecommendation, 'id' | 'user_id' | 'created_at'>>;
+      };
+      yield_predictions: {
+        Row: YieldPrediction;
+        Insert: Omit<YieldPrediction, 'id' | 'created_at'>;
+        Update: Partial<Omit<YieldPrediction, 'id' | 'user_id' | 'created_at'>>;
+      };
+      ai_farm_insights: {
+        Row: AIFarmInsight;
+        Insert: Omit<AIFarmInsight, 'id' | 'created_at'>;
+        Update: Partial<Omit<AIFarmInsight, 'id' | 'user_id' | 'created_at'>>;
       };
     };
   };

@@ -9,7 +9,8 @@ import { FarmHealthChart } from '@/components/dashboard/FarmHealthChart';
 import { SAMPLE_MANDI_RECORDS } from '@/lib/constants/mandiData';
 import { farmService } from '@/lib/services/farmService';
 import { iotService } from '@/lib/services/iotService';
-import type { FarmingActivity, SensorReading, MonitoringAlert } from '@/lib/supabase/types';
+import { aiFarmService } from '@/lib/services/aiFarmService';
+import type { FarmingActivity, SensorReading, MonitoringAlert, AIFarmInsight } from '@/lib/supabase/types';
 import { Button } from '@/components/ui/Button';
 import {
   MapPin,
@@ -37,6 +38,7 @@ import {
   Sliders,
   Radio,
   ExternalLink,
+  Lightbulb,
 } from 'lucide-react';
 
 export default function DashboardOverviewPage() {
@@ -74,19 +76,22 @@ export default function DashboardOverviewPage() {
     criticalAlerts: 0,
     sensorCount: 0,
   });
+  const [topInsights, setTopInsights] = useState<AIFarmInsight[]>([]);
 
   useEffect(() => {
     async function fetchStats() {
       try {
-        const [stats, acts, readings, alerts, sensors] = await Promise.all([
+        const [stats, acts, readings, alerts, sensors, insights] = await Promise.all([
           farmService.getDashboardStats(user?.id),
           farmService.getActivities(undefined, undefined, user?.id),
           iotService.getReadings({ limit: 40, userId: user?.id }),
           iotService.getAlerts({ status: 'active', userId: user?.id }),
           iotService.getSensors(undefined, undefined, user?.id),
+          aiFarmService.getInsights(user?.id),
         ]);
         setDbStats(stats);
         setRecentActivities(acts.slice(0, 4));
+        setTopInsights(insights.slice(0, 2));
 
         const sm = readings.find((r) => r.parameter === 'soil_moisture')?.value ?? 42.5;
         const st = readings.find((r) => r.parameter === 'soil_temperature')?.value ?? 24.2;
@@ -476,6 +481,119 @@ export default function DashboardOverviewPage() {
                 ))
               )}
             </div>
+          </div>
+
+          {/* Phase 4: AI Farm Intelligence & Actionable Insights Hub */}
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-950 via-[#0A2920] to-[#071F18] text-white shadow-xl space-y-5 border border-emerald-800/80">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-emerald-800/60">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-md shadow-emerald-500/30">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-extrabold tracking-tight text-emerald-100">
+                    AI Farm Intelligence Suite
+                  </h3>
+                  <p className="text-xs text-emerald-300/80">
+                    Multilingual voice assistant, foliar pathology, crop suitability & harvest forecasting
+                  </p>
+                </div>
+              </div>
+
+              <Link
+                href="/dashboard/ai-insights"
+                className="text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-700/60 hover:bg-emerald-700 text-emerald-100 border border-emerald-600 transition-all inline-flex items-center gap-1.5 self-start sm:self-auto"
+              >
+                <Lightbulb className="w-3.5 h-3.5 text-yellow-300" />
+                <span>View All Farm Insights</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            {/* 5 AI Action Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+              <Link
+                href="/dashboard/ai-assistant"
+                className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-emerald-700/50 transition-all text-center group"
+              >
+                <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <Bot className="w-4 h-4" />
+                </div>
+                <span className="text-xs font-bold block text-emerald-100">AI Assistant</span>
+                <span className="text-[10px] text-emerald-400 block mt-0.5">12 Langs & Voice</span>
+              </Link>
+
+              <Link
+                href="/dashboard/crop-doctor"
+                className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-emerald-700/50 transition-all text-center group"
+              >
+                <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <ScanEye className="w-4 h-4" />
+                </div>
+                <span className="text-xs font-bold block text-emerald-100">Crop Doctor</span>
+                <span className="text-[10px] text-emerald-400 block mt-0.5">Leaf Vision Scan</span>
+              </Link>
+
+              <Link
+                href="/dashboard/crop-recommendation"
+                className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-emerald-700/50 transition-all text-center group"
+              >
+                <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <Wheat className="w-4 h-4" />
+                </div>
+                <span className="text-xs font-bold block text-emerald-100">Crop Advisor</span>
+                <span className="text-[10px] text-emerald-400 block mt-0.5">Soil & Season Match</span>
+              </Link>
+
+              <Link
+                href="/dashboard/yield-prediction"
+                className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-emerald-700/50 transition-all text-center group"
+              >
+                <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <TrendingUp className="w-4 h-4" />
+                </div>
+                <span className="text-xs font-bold block text-emerald-100">Yield Predictor</span>
+                <span className="text-[10px] text-emerald-400 block mt-0.5">Growth Phenology</span>
+              </Link>
+
+              <Link
+                href="/dashboard/ai-insights"
+                className="p-3.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-emerald-700/50 transition-all text-center group col-span-2 sm:col-span-1"
+              >
+                <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                  <Lightbulb className="w-4 h-4 text-yellow-300" />
+                </div>
+                <span className="text-xs font-bold block text-emerald-100">AI Insights</span>
+                <span className="text-[10px] text-emerald-400 block mt-0.5">Sensor-Driven</span>
+              </Link>
+            </div>
+
+            {/* Top 2 Active Insights Preview */}
+            {topInsights.length > 0 && (
+              <div className="pt-3 border-t border-emerald-800/60 space-y-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block">
+                  Latest Actionable Telemetry Insights:
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {topInsights.map((ins) => (
+                    <div
+                      key={ins.id}
+                      className="p-3 rounded-2xl bg-emerald-900/40 border border-emerald-700/60 flex items-start gap-2.5 text-xs"
+                    >
+                      <Activity className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <div className="overflow-hidden">
+                        <strong className="font-bold text-emerald-100 block truncate">
+                          {ins.title}
+                        </strong>
+                        <p className="text-[11px] text-emerald-300/80 line-clamp-1 mt-0.5">
+                          {ins.suggested_action || ins.explanation || ins.description || ''}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Quick Ecosystem Tools Grid */}

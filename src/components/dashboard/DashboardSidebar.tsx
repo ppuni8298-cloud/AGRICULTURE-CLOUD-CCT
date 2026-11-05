@@ -23,6 +23,7 @@ import {
   Settings,
   X,
   Sparkles,
+  Lightbulb,
 } from 'lucide-react';
 
 interface DashboardSidebarProps {
@@ -63,6 +64,24 @@ export function DashboardSidebar({ isOpen, onClose }: DashboardSidebarProps) {
       title: t('dashboard.cropDoctor', 'Crop Doctor'),
       href: '/dashboard/crop-doctor',
       icon: ScanEye,
+      status: 'Active',
+    },
+    {
+      title: t('dashboard.cropRecommendation', 'Crop Advisor'),
+      href: '/dashboard/crop-recommendation',
+      icon: Sparkles,
+      status: 'Active',
+    },
+    {
+      title: t('dashboard.yieldPrediction', 'Yield Prediction'),
+      href: '/dashboard/yield-prediction',
+      icon: TrendingUp,
+      status: 'Active',
+    },
+    {
+      title: t('dashboard.aiInsights', 'AI Farm Insights'),
+      href: '/dashboard/ai-insights',
+      icon: Lightbulb,
       status: 'Active',
     },
     {
