@@ -8,7 +8,6 @@ export default function MarketplacePage() {
     <UpcomingModulePlaceholder
       title="Agricultural Marketplace & Machinery Rental"
       category="Agri-Commerce & Input Procurement"
-      phase="Phase 4"
       description="The Agricultural Marketplace connects certified FPOs (Farmer Producer Organizations) directly with certified seed suppliers, organic fertilizer producers, custom hiring equipment centers (tractors, rotavators, spray drones), and wholesale institutional buyers."
       plannedCapabilities={[
         'Direct farm-to-institutional buyer wholesale quotation bidding',

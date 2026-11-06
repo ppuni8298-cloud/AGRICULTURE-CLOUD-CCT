@@ -52,7 +52,7 @@
     "title": "16 Modular Solutions for Modern Agriculture",
     "subtitle": "Explore our planned end-to-end ecosystem, engineered to deliver intelligent farm advisory from sowing to harvest.",
     "learnMore": "Learn More",
-    "statusActive": "Active in Phase 1",
+    "statusActive": "Active",
     "statusPlanned": "Planned Capability",
     "modalTitle": "Feature Overview & Technical Architecture",
     "modalClose": "Close Details"
@@ -75,19 +75,12 @@
     "actionAdvice": "Generated via AgroCloud Crop Diagnostics Protocol v1.4"
   },
   "mandi": {
-    "badge": "Agri-Market Intelligence Preview",
-    "title": "All-India Mandi Price Explorer",
-    "subtitle": "Explore transparent price benchmarks across APMC markets. Empowering farmers to avoid distress selling.",
-    "disclaimer": "Sample Demonstration Records: Illustrates APMC benchmark tracking. Production release integrates official e-NAM and Agmarknet feeds.",
-    "selectCommodity": "Select Commodity",
-    "selectState": "Select State",
-    "selectDistrict": "Select District",
-    "selectMarket": "Select Market",
-    "minPrice": "Min Price",
-    "maxPrice": "Max Price",
-    "modalPrice": "Modal Price",
-    "unit": "₹ / Quintal",
-    "reportedOn": "Reporting Date"
+    "title": "Mandi Intelligence & Price Analytics",
+    "subtitle": "Track APMC market rates, compare price spreads, analyze price volatility and calculate net farmer realization.",
+    "comparison": "Mandi Price Comparison",
+    "analytics": "Historical Price Analytics",
+    "transport": "Transportation Cost & Net Profit Calculator",
+    "advisor": "Farmer Selling Decision Advisor"
   },
   "howItWorks": {
     "badge": "Simple Onboarding",
@@ -178,7 +171,6 @@
     "thresholdAlerts": "Threshold Alerts",
     "irrigationAdvisor": "Smart Irrigation Advisor",
     "simulatedNotice": "SIMULATED IoT DATA – NOT FROM PHYSICAL HARDWARE",
-    "mandiIntelligence": "Mandi Intelligence",
     "mandiComparison": "Price Comparison",
     "mandiAnalytics": "Price Trends & Volatility",
     "transportCalculator": "Freight & Net Profit Calculator",
@@ -197,14 +189,6 @@
     "simulator": "What-If Farm Simulator",
     "geospatial": "Geospatial GIS Boundaries",
     "predictive": "Predictive Farm Analytics"
-  },
-  "mandi": {
-    "title": "Mandi Intelligence & Price Analytics",
-    "subtitle": "Track APMC market rates, compare price spreads, analyze price volatility and calculate net farmer realization.",
-    "comparison": "Mandi Price Comparison",
-    "analytics": "Historical Price Analytics",
-    "transport": "Transportation Cost & Net Profit Calculator",
-    "advisor": "Farmer Selling Decision Advisor"
   },
   "monitoring": {
     "title": "Smart IoT & Micro-Weather Monitoring",
@@ -237,7 +221,7 @@
   "faq": {
     "badge": "Got Questions?",
     "title": "Frequently Asked Questions",
-    "subtitle": "Answers to common questions regarding AgroCloud AI capabilities, data privacy, and upcoming phases."
+    "subtitle": "Answers to common questions regarding AgroCloud AI capabilities, data privacy, and platform features."
   },
   "footer": {
     "tagline": "Smart Farming. Intelligent Decisions. Better Tomorrow.",
@@ -249,4 +233,3 @@
     "designedFor": "Engineered for Indian Agriculture"
   }
 }
-

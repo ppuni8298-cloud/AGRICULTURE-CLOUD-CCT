@@ -26,7 +26,7 @@ export function FaqSection() {
           <p className="mt-4 text-base sm:text-lg text-[#64756B] dark:text-emerald-300/80">
             {t(
               'faq.subtitle',
-              'Answers to common questions regarding AgroCloud AI capabilities, data privacy, and upcoming phases.'
+              'Answers to common questions regarding AgroCloud AI capabilities, data privacy, and platform features.'
             )}
           </p>
         </div>

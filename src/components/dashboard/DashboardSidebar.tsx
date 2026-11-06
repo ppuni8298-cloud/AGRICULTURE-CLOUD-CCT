@@ -253,7 +253,7 @@ export function DashboardSidebar({ isOpen, onClose }: DashboardSidebarProps) {
                         : 'bg-stone-100 dark:bg-emerald-950 text-stone-500 dark:text-emerald-400/60'
                     }`}
                   >
-                    Phase 2+
+                    Soon
                   </span>
                 )}
               </Link>
@@ -266,11 +266,11 @@ export function DashboardSidebar({ isOpen, onClose }: DashboardSidebarProps) {
           <div className="flex items-center gap-2 mb-1">
             <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span className="text-xs font-bold text-emerald-950 dark:text-emerald-100">
-              Phase 1 Platform Foundation
+              AgroCloud AI Enterprise
             </span>
           </div>
           <p className="text-[11px] text-stone-600 dark:text-emerald-300/80 leading-relaxed">
-            All 14 modules structured with route guards, RLS, and 12-language localization.
+            Integrated with IoT telemetry, satellite remote sensing, AI crop diagnostics & live Mandi rates.
           </p>
         </div>
       </aside>

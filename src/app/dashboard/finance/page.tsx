@@ -8,7 +8,6 @@ export default function FinancePage() {
     <UpcomingModulePlaceholder
       title="Farmer Financial Management & Kisan Credit"
       category="Agri-Fintech & Cost of Cultivation"
-      phase="Phase 4"
       description="The Farmer Financial Management module provides a digital farm ledger for recording daily input expenses (seeds, diesel, fertilizer, labor wages), tracking Kisan Credit Card (KCC) interest cycles, and calculating true net seasonal profit margins per acre."
       plannedCapabilities={[
         'Automated Cost of Cultivation ledger (A2, A2+FL, and C2 metrics)',

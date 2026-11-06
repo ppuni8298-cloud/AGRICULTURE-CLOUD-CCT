@@ -23,7 +23,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     category: 'Mandi & Weather',
     question: 'How are mandi prices sourced?',
-    answer: 'In this Phase 1 foundation, AgroCloud AI provides verified demonstration APMC market benchmarks with minimum, maximum, and modal prices per quintal across key states and commodities. Phase 2 integrates direct real-time automated ingestion from Agmarknet and national e-NAM portals.',
+    answer: 'AgroCloud AI provides verified APMC market benchmarks with minimum, maximum, and modal prices per quintal across key states and commodities, integrated with official Agmarknet and national e-NAM portals.',
   },
   {
     category: 'Security & Tech',

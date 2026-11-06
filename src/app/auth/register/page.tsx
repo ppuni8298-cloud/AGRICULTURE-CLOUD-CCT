@@ -26,6 +26,7 @@ import {
   Sparkles,
   ShieldCheck,
   Check,
+  ArrowLeft,
 } from 'lucide-react';
 import type { UserRole } from '@/lib/supabase/types';
 
@@ -88,9 +89,15 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-[#F5FAF5] dark:bg-[#051D16] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden transition-colors">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-emerald-400/10 dark:bg-emerald-800/15 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-      {/* Top Header with Theme & Language */}
-      <div className="max-w-xl w-full mx-auto px-4 sm:px-0 flex items-center justify-between mb-8">
-        <Logo size="md" showTagline />
+      {/* Top Header with Theme, Language & Back to Home */}
+      <div className="max-w-xl w-full mx-auto px-4 sm:px-0 flex items-center justify-between mb-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 dark:text-emerald-300 dark:hover:text-emerald-100 bg-white/80 dark:bg-[#0A2920] px-3.5 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-800 shadow-sm transition-all hover:-translate-x-0.5"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Home</span>
+        </Link>
         <div className="flex items-center gap-2">
           <LanguageSelector variant="compact" />
           <ThemeToggle />
@@ -99,6 +106,9 @@ export default function RegisterPage() {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-xl px-4 sm:px-0">
         <div className="bg-white dark:bg-[#0A2920] py-8 px-6 sm:px-10 shadow-2xl rounded-3xl border border-emerald-100 dark:border-emerald-800/80">
+          <div className="flex justify-center mb-4">
+            <Logo size="md" showTagline={false} />
+          </div>
           <div className="mb-6 text-center">
             <h2 className="text-2xl sm:text-3xl font-black text-emerald-950 dark:text-emerald-100 tracking-tight">
               {t('auth.registerTitle', 'Create Your AgroCloud AI Account')}
@@ -112,9 +122,29 @@ export default function RegisterPage() {
           </div>
 
           {authError && (
-            <div className="mb-5 p-3.5 rounded-2xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-900 dark:text-red-200 flex items-center gap-2.5 text-xs sm:text-sm">
-              <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
-              <span>{authError}</span>
+            <div className="mb-5 p-4 rounded-2xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800 text-red-900 dark:text-red-200 text-xs sm:text-sm">
+              <div className="flex items-center gap-2.5 font-bold mb-1">
+                <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+                <span>{authError}</span>
+              </div>
+              {authError.toLowerCase().includes('rate limit') && (
+                <div className="mt-2 pl-6 text-xs text-stone-600 dark:text-red-300 space-y-1">
+                  <p>
+                    Supabase free tier limits confirmation emails to 3 per hour.
+                  </p>
+                  <p className="font-semibold text-emerald-700 dark:text-emerald-400">
+                    Fix: In Supabase Dashboard &rarr; Auth &rarr; Providers &rarr; Email, disable <strong>"Confirm email"</strong>.
+                  </p>
+                  <div className="pt-2">
+                    <Link
+                      href="/auth/login"
+                      className="inline-block text-emerald-600 dark:text-emerald-400 font-bold hover:underline"
+                    >
+                      Or click here to use 1-Click Demo Login &rarr;
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -350,8 +380,8 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          {/* Login Link */}
-          <div className="mt-6 pt-6 border-t border-emerald-100 dark:border-emerald-800/60 text-center">
+          {/* Login & Return Links */}
+          <div className="mt-6 pt-6 border-t border-emerald-100 dark:border-emerald-800/60 text-center space-y-3">
             <p className="text-xs sm:text-sm text-stone-600 dark:text-emerald-300/80">
               {t('auth.alreadyHaveAccount', 'Already registered?')}{' '}
               <Link
@@ -361,6 +391,15 @@ export default function RegisterPage() {
                 {t('auth.signInLink', 'Sign in here')}
               </Link>
             </p>
+            <div>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-500 hover:text-emerald-700 dark:text-emerald-400/80 dark:hover:text-emerald-300 transition-colors"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Return to Landing Page</span>
+              </Link>
+            </div>
           </div>
         </div>
 

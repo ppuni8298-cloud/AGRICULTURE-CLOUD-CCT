@@ -45,8 +45,14 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="min-h-screen bg-[#F5FAF5] dark:bg-[#051D16] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden transition-colors">
-      <div className="max-w-md w-full mx-auto px-4 sm:px-0 flex items-center justify-between mb-8">
-        <Logo size="md" showTagline />
+      <div className="max-w-md w-full mx-auto px-4 sm:px-0 flex items-center justify-between mb-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 dark:text-emerald-300 dark:hover:text-emerald-100 bg-white/80 dark:bg-[#0A2920] px-3.5 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-800 shadow-sm transition-all hover:-translate-x-0.5"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Home</span>
+        </Link>
         <div className="flex items-center gap-2">
           <LanguageSelector variant="compact" />
           <ThemeToggle />
@@ -112,14 +118,25 @@ export default function ForgotPasswordPage() {
             </Button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-emerald-100 dark:border-emerald-800/60 text-center">
-            <Link
-              href="/auth/login"
-              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>{t('auth.backToLogin', 'Back to login')}</span>
-            </Link>
+          <div className="mt-6 pt-6 border-t border-emerald-100 dark:border-emerald-800/60 text-center space-y-3">
+            <div>
+              <Link
+                href="/auth/login"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-emerald-700 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>{t('auth.backToLogin', 'Back to login')}</span>
+              </Link>
+            </div>
+            <div>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-500 hover:text-emerald-700 dark:text-emerald-400/80 dark:hover:text-emerald-300 transition-colors"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Return to Landing Page</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

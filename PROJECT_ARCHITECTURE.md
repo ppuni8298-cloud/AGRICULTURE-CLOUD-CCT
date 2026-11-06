@@ -88,3 +88,4 @@ graph TB
 - **PostgreSQL Database:** 23 relational tables with cascading foreign keys and composite B-tree indexes.
 - **Row Level Security (RLS):** Strict tenant isolation enforcing `auth.uid() = user_id` across all personal farm data.
 - **Storage:** Secure bucket architecture with user-folder isolation for aerial drone orthomosaics and farm photos.
+

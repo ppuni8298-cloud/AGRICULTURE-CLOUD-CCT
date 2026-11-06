@@ -68,18 +68,23 @@ The master schema installs the following 23 tables across the 7 application phas
 
 ---
 
-## 3. Storage Bucket Configuration
+## 3. Storage Bucket Configuration (Automated via SQL)
 
-For drone survey uploads and farm photographs:
-1. In the Supabase Dashboard, go to **Storage** &rarr; **New Bucket**.
-2. Create bucket named: `drone-surveys` (Public: Off, Allowed MIME types: `image/*`).
-3. Create bucket named: `farm-images` (Public: On).
-4. Run the storage RLS policy in SQL Editor:
-   ```sql
-   CREATE POLICY "Allow authenticated user uploads"
-   ON storage.objects FOR INSERT TO authenticated
-   WITH CHECK (bucket_id = 'drone-surveys' AND (storage.foldername(name))[1] = auth.uid()::text);
-   ```
+The master schema [`supabase/agrocloud_complete_schema.sql`](./supabase/agrocloud_complete_schema.sql) automatically provisions both required Supabase Storage buckets and configures their Row Level Security (RLS) policies:
+
+1. **`crop-images`**:
+   - Purpose: Crop Doctor leaf and plant disease diagnostic photos.
+   - Max file size: 10 MB.
+   - Allowed MIME types: `image/jpeg`, `image/png`, `image/webp`.
+   - Access: Public read access for diagnostic review; uploads restricted to authenticated farmers (`auth.role() = 'authenticated'`); modifications restricted to object owners.
+
+2. **`drone-surveys`**:
+   - Purpose: Aerial drone orthomosaics and multispectral survey imagery.
+   - Max file size: 25 MB.
+   - Allowed MIME types: `image/jpeg`, `image/png`, `image/tiff`, `image/webp`.
+   - Access: Public read access; uploads restricted to authenticated farmers; modifications restricted to object owners.
+
+*(Note: Running `supabase/agrocloud_complete_schema.sql` creates these buckets and policies automatically. Manual bucket creation in the dashboard is not required).*
 
 ---
 
@@ -94,3 +99,4 @@ USING (auth.uid() = user_id)
 WITH CHECK (auth.uid() = user_id);
 ```
 Farmers cannot inspect or modify records belonging to other users. Public read access is granted strictly to non-sensitive benchmark data (`mandi_records`, `mandi_price_history`).
+

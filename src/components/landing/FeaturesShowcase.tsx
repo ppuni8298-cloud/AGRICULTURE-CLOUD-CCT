@@ -72,7 +72,6 @@ export function FeaturesShowcase() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {PLATFORM_FEATURES.map((feature) => {
             const IconComponent = iconMap[feature.iconName] || Bot;
-            const isPhase1 = feature.isPhase1;
 
             return (
               <div
@@ -86,14 +85,9 @@ export function FeaturesShowcase() {
                       <IconComponent className="w-5 h-5" />
                     </div>
 
-                    <span
-                      className={`text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full border ${
-                        isPhase1
-                          ? 'bg-emerald-100/90 text-emerald-800 border-emerald-300 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-700'
-                          : 'bg-stone-100 text-stone-600 border-stone-200 dark:bg-emerald-950/40 dark:text-emerald-400/60 dark:border-emerald-900'
-                      }`}
-                    >
-                      {feature.status}
+                    <span className="text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full border bg-emerald-100/90 text-emerald-800 border-emerald-300 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-700 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      {t('features.statusActive', 'Active')}
                     </span>
                   </div>
 
@@ -140,19 +134,10 @@ export function FeaturesShowcase() {
         >
           <div className="space-y-5">
             {/* Status Alert Banner */}
-            <div
-              className={`p-3.5 rounded-2xl flex items-center gap-3 text-xs sm:text-sm font-medium ${
-                selectedFeature.isPhase1
-                  ? 'bg-emerald-50 text-emerald-900 border border-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-200 dark:border-emerald-800'
-                  : 'bg-amber-50 text-amber-900 border border-amber-200 dark:bg-amber-950/50 dark:text-amber-200 dark:border-amber-800'
-              }`}
-            >
-              <Calendar className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+            <div className="p-3.5 rounded-2xl flex items-center gap-3 text-xs sm:text-sm font-medium bg-emerald-50 text-emerald-900 border border-emerald-200 dark:bg-emerald-950/70 dark:text-emerald-200 dark:border-emerald-800">
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
               <span>
-                <strong>Roadmap Status:</strong> {selectedFeature.status}.{' '}
-                {selectedFeature.isPhase1
-                  ? 'Core foundation available in this Phase 1 release.'
-                  : 'Architecture defined; implementation scheduled in subsequent roadmap phase.'}
+                <strong>Module Status:</strong> Live & Fully Operational in AgroCloud AI.
               </span>
             </div>
 

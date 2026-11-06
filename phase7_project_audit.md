@@ -86,3 +86,4 @@ All 12 language files in `src/i18n/locales/` were audited against the master dic
    - User ownership check (`auth.uid() = user_id`) isolates data between different farmers.
 3. **Upload Validation:**
    - Drone surveys enforce strict MIME checking (`image/jpeg`, `image/png`, `image/webp`, `image/tiff`) and a 25 MB payload ceiling.
+

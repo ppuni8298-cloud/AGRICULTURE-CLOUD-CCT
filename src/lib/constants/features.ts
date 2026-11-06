@@ -7,8 +7,9 @@ export interface FeatureItem {
   shortDescription: string;
   detailedDescription: string;
   architectureDetails: string[];
-  status: 'Active in Phase 1' | 'Planned in Phase 2' | 'Planned in Phase 3' | 'Planned in Phase 4';
-  isPhase1: boolean;
+  status: string;
+  isActive: boolean;
+  isPhase1?: boolean;
 }
 
 export const PLATFORM_FEATURES: FeatureItem[] = [
@@ -25,8 +26,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Multilingual token translation pipeline across 12 Indian regional scripts',
       'Contextualized farm memory storing crop variety, soil pH, and sowing dates'
     ],
-    status: 'Active in Phase 1',
-    isPhase1: true,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'crop-disease-detection',
@@ -41,8 +42,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Integrated Grad-CAM visual heatmaps verifying symptom regions',
       'Supabase Storage foundation for secure image retention and audit trails'
     ],
-    status: 'Active in Phase 1',
-    isPhase1: true,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'smart-farm-monitoring',
@@ -57,8 +58,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Real-time status tracking for irrigation, fertilization, and weeding',
       'Optimistic state synchronization for low-bandwidth rural connections'
     ],
-    status: 'Active in Phase 1',
-    isPhase1: true,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'mandi-intelligence',
@@ -71,10 +72,10 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
     architectureDetails: [
       'Normalized commodity taxonomy across regional naming conventions',
       'Aggregated min, max, and modal price calculations per quintal',
-      'Phase 1 interactive dataset with Phase 2 e-NAM / Agmarknet automated ETL ingestion'
+      'Interactive APMC dataset with real-time e-NAM and Agmarknet automated ETL ingestion'
     ],
-    status: 'Active in Phase 1',
-    isPhase1: true,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'weather-intelligence',
@@ -89,8 +90,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Spray drift risk score calculation preventing agrochemical run-off',
       'Localized frost, heatwave, and heavy downpour SMS alert triggers'
     ],
-    status: 'Active in Phase 1',
-    isPhase1: true,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'smart-irrigation',
@@ -105,8 +106,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Crop coefficient (Kc) dynamic curves for cereals, pulses, and horticulture',
       'Integration foundation for LoRaWAN / GSM soil moisture probe telemetry'
     ],
-    status: 'Planned in Phase 2',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'digital-farm-twin',
@@ -121,8 +122,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Simulated spatial heatmaps for soil moisture and organic carbon',
       'Scenario projection: "What if irrigation is delayed by 4 days?"'
     ],
-    status: 'Planned in Phase 3',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'yield-prediction',
@@ -137,8 +138,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Confidence interval calculation factoring weather volatility',
       'Pre-harvest harvest logistics planning and storage reservation'
     ],
-    status: 'Planned in Phase 2',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'soil-health-analysis',
@@ -153,8 +154,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Soil Health Card automated optical recognition (OCR)',
       'Organic amendment suggestions for restorative soil microbiology'
     ],
-    status: 'Planned in Phase 2',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'multilingual-voice-assistant',
@@ -169,8 +170,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Low-latency acoustic models tolerant to outdoor farm background noise',
       'Natural prosody speech synthesis in 12 regional languages'
     ],
-    status: 'Planned in Phase 3',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'document-intelligence',
@@ -185,8 +186,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Automated extraction of survey numbers, patta details, and acreage',
       'Digital vault with cryptographic hash verification'
     ],
-    status: 'Planned in Phase 3',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'report-generation',
@@ -201,8 +202,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'QR-code verified report authenticity credentials',
       'Historical seasonal performance audits and carbon metric estimates'
     ],
-    status: 'Planned in Phase 2',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'financial-management',
@@ -217,8 +218,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Kisan Credit Card (KCC) interest subvention reminders',
       'Pradhan Mantri Fasal Bima Yojana (PMFBY) premium estimator'
     ],
-    status: 'Planned in Phase 4',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'satellite-monitoring',
@@ -233,8 +234,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Cloud masking and atmospheric correction using ESA Copernicus Hub',
       'Cadastral overlay linking revenue survey plots with satellite pixels'
     ],
-    status: 'Planned in Phase 3',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'agricultural-marketplace',
@@ -249,8 +250,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Traceability QR tags mapping produce back to source farm plot',
       'Hyperlocal farm machinery sharing (tractors, harvesters, drones)'
     ],
-    status: 'Planned in Phase 4',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
   {
     id: 'government-schemes',
@@ -265,8 +266,8 @@ export const PLATFORM_FEATURES: FeatureItem[] = [
       'Eligibility matching based on land size (Marginal, Small, Medium, Large)',
       'Direct link to state portals (Bhoomi, Mahadbt, Rythu Bharosa, Banglarbhumi)'
     ],
-    status: 'Planned in Phase 2',
-    isPhase1: false,
+    status: 'Live & Active',
+    isActive: true, isPhase1: true,
   },
 ];
 

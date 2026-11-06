@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 interface UpcomingModulePlaceholderProps {
   title: string;
   category: string;
-  phase: string;
+  phase?: string;
   description: string;
   plannedCapabilities: string[];
 }
@@ -16,7 +16,6 @@ interface UpcomingModulePlaceholderProps {
 export function UpcomingModulePlaceholder({
   title,
   category,
-  phase,
   description,
   plannedCapabilities,
 }: UpcomingModulePlaceholderProps) {
@@ -44,9 +43,9 @@ export function UpcomingModulePlaceholder({
             </h1>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 text-xs font-bold w-fit">
-            <Calendar className="w-4 h-4 text-amber-600" />
-            <span>Planned in {phase}</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs font-bold w-fit">
+            <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <span>Enterprise Expansion</span>
           </div>
         </div>
 

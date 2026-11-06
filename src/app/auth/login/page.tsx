@@ -20,6 +20,7 @@ import {
   CheckCircle2,
   Sparkles,
   ArrowRight,
+  ArrowLeft,
   ShieldCheck,
 } from 'lucide-react';
 
@@ -75,9 +76,15 @@ export default function LoginPage() {
       {/* Background radial gradient */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-emerald-400/10 dark:bg-emerald-800/15 blur-[120px] rounded-full pointer-events-none -z-10" />
 
-      {/* Top Header with Theme & Language */}
-      <div className="max-w-md w-full mx-auto px-4 sm:px-0 flex items-center justify-between mb-8">
-        <Logo size="md" showTagline />
+      {/* Top Header with Theme, Language & Back to Home */}
+      <div className="max-w-md w-full mx-auto px-4 sm:px-0 flex items-center justify-between mb-6">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 hover:text-emerald-950 dark:text-emerald-300 dark:hover:text-emerald-100 bg-white/80 dark:bg-[#0A2920] px-3.5 py-1.5 rounded-full border border-emerald-200 dark:border-emerald-800 shadow-sm transition-all hover:-translate-x-0.5"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Home</span>
+        </Link>
         <div className="flex items-center gap-2">
           <LanguageSelector variant="compact" />
           <ThemeToggle />
@@ -86,6 +93,9 @@ export default function LoginPage() {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
         <div className="bg-white dark:bg-[#0A2920] py-8 px-6 sm:px-10 shadow-2xl rounded-3xl border border-emerald-100 dark:border-emerald-800/80">
+          <div className="flex justify-center mb-4">
+            <Logo size="md" showTagline={false} />
+          </div>
           <div className="mb-6 text-center">
             <h2 className="text-2xl font-black text-emerald-950 dark:text-emerald-100 tracking-tight">
               {t('auth.loginTitle', 'Welcome Back to AgroCloud AI')}
@@ -209,8 +219,8 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          {/* Register Link */}
-          <div className="mt-6 pt-6 border-t border-emerald-100 dark:border-emerald-800/60 text-center">
+          {/* Register & Return Links */}
+          <div className="mt-6 pt-6 border-t border-emerald-100 dark:border-emerald-800/60 text-center space-y-3">
             <p className="text-xs sm:text-sm text-stone-600 dark:text-emerald-300/80">
               {t('auth.dontHaveAccount', "Don't have an account?")}{' '}
               <Link
@@ -220,6 +230,15 @@ export default function LoginPage() {
                 {t('auth.signUpLink', 'Create an account')}
               </Link>
             </p>
+            <div>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-500 hover:text-emerald-700 dark:text-emerald-400/80 dark:hover:text-emerald-300 transition-colors"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Return to Landing Page</span>
+              </Link>
+            </div>
           </div>
         </div>
 

@@ -51,3 +51,4 @@ This document defines all configuration keys for local development, CI/CD, and V
 1. **Never commit `.env.local` to Git.** It is already listed in `.gitignore`.
 2. **In Vercel:** Add environment variables under **Settings &rarr; Environment Variables**.
 3. **In GitHub Actions:** Add secrets under **Settings &rarr; Secrets and variables &rarr; Actions**.
+

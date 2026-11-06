@@ -266,3 +266,4 @@ if (failedTests > 0) {
   console.log('✅ ALL TESTS PASSED SUCCESSFULLY! AgroCloud AI is production-ready.');
   process.exit(0);
 }
+

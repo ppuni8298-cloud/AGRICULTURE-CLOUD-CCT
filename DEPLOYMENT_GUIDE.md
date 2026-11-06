@@ -75,3 +75,4 @@ Verify the deployment by testing the following routes:
 7. **Digital Farm Twin:** `https://your-app.vercel.app/dashboard/digital-twin`
 8. **What-If Simulator:** `https://your-app.vercel.app/dashboard/farm-simulator`
 9. **Language Switcher:** Select Kannada, Hindi, or Telugu to verify instant multilingual translation.
+

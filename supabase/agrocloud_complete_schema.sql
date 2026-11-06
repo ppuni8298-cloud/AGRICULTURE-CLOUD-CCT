@@ -616,7 +616,7 @@ BEGIN
 
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
@@ -642,6 +642,12 @@ ALTER TABLE public.sensor_simulations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.monitoring_alerts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.irrigation_recommendations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.weather_cache ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.ai_conversations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.ai_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.crop_diagnoses ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.crop_recommendations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.yield_predictions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.ai_farm_insights ENABLE ROW LEVEL SECURITY;
 
 -- Helper function for Admin check
 CREATE OR REPLACE FUNCTION public.is_admin()
@@ -652,7 +658,7 @@ BEGIN
         WHERE id = auth.uid() AND role = 'Administrator'
     );
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public;
 
 -- Safe Policy helper
 DO $$ BEGIN
@@ -915,7 +921,7 @@ CREATE TABLE IF NOT EXISTS public.mandi_price_history (
 
 CREATE TABLE IF NOT EXISTS public.farmer_mandi_watchlists (
   id TEXT PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   commodity VARCHAR(100) NOT NULL,
   market VARCHAR(150) NOT NULL,
   target_price_alert NUMERIC(10, 2),
@@ -925,7 +931,7 @@ CREATE TABLE IF NOT EXISTS public.farmer_mandi_watchlists (
 
 CREATE TABLE IF NOT EXISTS public.mandi_transport_calculations (
   id TEXT PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   farm_id UUID REFERENCES public.farms(id) ON DELETE SET NULL,
   commodity VARCHAR(100) NOT NULL,
   quantity_quintals NUMERIC(10, 2) NOT NULL,
@@ -1132,3 +1138,55 @@ BEGIN
   CREATE POLICY "Users can manage own predictive insights" ON public.predictive_insights FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
 END $$;
 
+-- ==============================================================================
+-- 11. STORAGE BUCKETS & STORAGE OBJECT SECURITY POLICIES
+-- ==============================================================================
+
+-- Provision public buckets for leaf disease photos and drone survey orthomosaics
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES 
+    ('crop-images', 'crop-images', true, 10485760, ARRAY['image/jpeg', 'image/png', 'image/webp']),
+    ('drone-surveys', 'drone-surveys', true, 26214400, ARRAY['image/jpeg', 'image/png', 'image/tiff', 'image/webp'])
+ON CONFLICT (id) DO UPDATE SET
+    public = EXCLUDED.public,
+    file_size_limit = EXCLUDED.file_size_limit,
+    allowed_mime_types = EXCLUDED.allowed_mime_types;
+
+-- Storage RLS Policies
+DO $$ 
+BEGIN
+    -- Public Read Access for Crop Images & Drone Surveys
+    DROP POLICY IF EXISTS "Public Read Access for Crop Images" ON storage.objects;
+    CREATE POLICY "Public Read Access for Crop Images" 
+    ON storage.objects FOR SELECT 
+    USING (bucket_id = 'crop-images');
+
+    DROP POLICY IF EXISTS "Public Read Access for Drone Surveys" ON storage.objects;
+    CREATE POLICY "Public Read Access for Drone Surveys" 
+    ON storage.objects FOR SELECT 
+    USING (bucket_id = 'drone-surveys');
+
+    -- Authenticated Upload Access
+    DROP POLICY IF EXISTS "Authenticated Users Can Upload Crop Images" ON storage.objects;
+    CREATE POLICY "Authenticated Users Can Upload Crop Images" 
+    ON storage.objects FOR INSERT 
+    WITH CHECK (bucket_id = 'crop-images' AND auth.role() = 'authenticated');
+
+    DROP POLICY IF EXISTS "Authenticated Users Can Upload Drone Surveys" ON storage.objects;
+    CREATE POLICY "Authenticated Users Can Upload Drone Surveys" 
+    ON storage.objects FOR INSERT 
+    WITH CHECK (bucket_id = 'drone-surveys' AND auth.role() = 'authenticated');
+
+    -- User Self-Management for Uploaded Images
+    DROP POLICY IF EXISTS "Users Can Manage Own Crop Images" ON storage.objects;
+    CREATE POLICY "Users Can Manage Own Crop Images" 
+    ON storage.objects FOR ALL 
+    USING (bucket_id = 'crop-images' AND (auth.uid() = owner OR auth.uid()::text = (storage.foldername(name))[1]))
+    WITH CHECK (bucket_id = 'crop-images' AND (auth.uid() = owner OR auth.uid()::text = (storage.foldername(name))[1]));
+
+    DROP POLICY IF EXISTS "Users Can Manage Own Drone Surveys" ON storage.objects;
+    CREATE POLICY "Users Can Manage Own Drone Surveys" 
+    ON storage.objects FOR ALL 
+    USING (bucket_id = 'drone-surveys' AND (auth.uid() = owner OR auth.uid()::text = (storage.foldername(name))[1]))
+    WITH CHECK (bucket_id = 'drone-surveys' AND (auth.uid() = owner OR auth.uid()::text = (storage.foldername(name))[1]));
+END $$;

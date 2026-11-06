@@ -8,7 +8,6 @@ export default function ReportsPage() {
     <UpcomingModulePlaceholder
       title="Reports & Compliance Analytics"
       category="Agronomic Documentation"
-      phase="Phase 2"
       description="The Reports module compiles official, verifiable PDF and CSV reports for agricultural bank officers, crop insurance claim evaluators, organic certification bodies, and cooperative societies."
       plannedCapabilities={[
         'One-click PDF generation of seasonal crop logs and input applications',

@@ -8,7 +8,6 @@ export default function GovernmentSchemesPage() {
     <UpcomingModulePlaceholder
       title="Government Schemes & Subsidies Assistant"
       category="Public Welfare & Grant Discovery"
-      phase="Phase 2"
       description="The Government Schemes Assistant algorithmically analyzes your registered landholding acreage, crop categories, and regional state to automatically match and explain qualifying central and state agricultural support programs."
       plannedCapabilities={[
         'Automated qualification check for PM-KISAN, PMKSY, and Sub-Mission on Agri Mechanization (SMAM)',

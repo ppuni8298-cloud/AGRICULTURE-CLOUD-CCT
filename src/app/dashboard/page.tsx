@@ -837,7 +837,7 @@ export default function DashboardOverviewPage() {
               </div>
 
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                Phase 6 Active
+                Live Remote Sensing
               </span>
             </div>
 
