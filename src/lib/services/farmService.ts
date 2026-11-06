@@ -16,6 +16,15 @@ const STORAGE_KEYS = {
   EXPENSES: 'agrocloud_expenses',
 };
 
+function formatDbError(action: string, error: { message: string; code?: string }): Error {
+  if (error.code === 'PGRST205' || error.message?.includes('schema cache') || error.message?.includes('not find the table')) {
+    return new Error(
+      `Database tables not yet initialized in Supabase. Please copy and run 'supabase/agrocloud_complete_schema.sql' in your Supabase SQL Editor.`
+    );
+  }
+  return new Error(`Failed to ${action}: ${error.message}`);
+}
+
 // Realistic initial Indian Agricultural Dataset
 const SEED_FARMS: Farm[] = [
   {
@@ -421,7 +430,7 @@ export const farmService = {
           .single();
         if (error) {
           console.error('[Supabase createFarm error]:', error.message);
-          throw new Error(`Failed to save farm to Supabase: ${error.message}`);
+          throw formatDbError('save farm to Supabase', error);
         }
         return data as Farm;
       }
@@ -456,7 +465,7 @@ export const farmService = {
         const { data, error } = await q.select().single();
         if (error) {
           console.error('[Supabase updateFarm error]:', error.message);
-          throw new Error(`Failed to update farm in Supabase: ${error.message}`);
+          throw formatDbError('update farm in Supabase', error);
         }
         return data as Farm;
       }
@@ -574,7 +583,7 @@ export const farmService = {
           .single();
         if (error) {
           console.error('[Supabase createField error]:', error.message);
-          throw new Error(`Failed to save field to Supabase: ${error.message}`);
+          throw formatDbError('save field to Supabase', error);
         }
         return data as Field;
       }
@@ -706,7 +715,7 @@ export const farmService = {
           .single();
         if (error) {
           console.error('[Supabase createCrop error]:', error.message);
-          throw new Error(`Failed to save crop to Supabase: ${error.message}`);
+          throw formatDbError('save crop to Supabase', error);
         }
         return data as Crop;
       }
@@ -823,7 +832,7 @@ export const farmService = {
           .single();
         if (error) {
           console.error('[Supabase createActivity error]:', error.message);
-          throw new Error(`Failed to save activity to Supabase: ${error.message}`);
+          throw formatDbError('save activity to Supabase', error);
         }
         return data as FarmingActivity;
       }
@@ -909,7 +918,7 @@ export const farmService = {
           .single();
         if (error) {
           console.error('[Supabase createExpense error]:', error.message);
-          throw new Error(`Failed to save expense to Supabase: ${error.message}`);
+          throw formatDbError('save expense to Supabase', error);
         }
         return data as FarmingExpense;
       }
