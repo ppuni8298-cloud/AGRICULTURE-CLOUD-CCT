@@ -188,9 +188,10 @@ export default function CropRecommendationPage() {
         throw new Error(data.error || 'Failed to calculate crop suitability.');
       }
 
-      setRecommendations(data.recommendations || []);
-      setTopCrop(data.top_crop || '');
-      setRationale(data.agronomic_rationale || '');
+      const recList = data.recommendations || data.evaluated_crops || [];
+      setRecommendations(recList);
+      setTopCrop(data.top_crop || (recList[0]?.name ?? 'Paddy (Rice)'));
+      setRationale(data.agronomic_rationale || 'Optimal agro-climatic alignment based on your farm and soil inputs.');
 
       // Persist to user's recommendation history
       const recData: Omit<CropRecommendation, 'id' | 'created_at'> = {

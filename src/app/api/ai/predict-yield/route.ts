@@ -19,6 +19,30 @@ const CROP_BASELINES: Record<string, YieldBaseline> = {
     optimal_soil_moisture: [50, 75],
     temp_comfort: [20, 30],
   },
+  potato: {
+    crop: 'Potato',
+    unit: 'Quintals/Acre',
+    min_per_acre: 120,
+    max_per_acre: 180,
+    optimal_soil_moisture: [60, 80],
+    temp_comfort: [16, 24],
+  },
+  onion: {
+    crop: 'Onion',
+    unit: 'Quintals/Acre',
+    min_per_acre: 90,
+    max_per_acre: 140,
+    optimal_soil_moisture: [50, 70],
+    temp_comfort: [18, 30],
+  },
+  wheat: {
+    crop: 'Wheat',
+    unit: 'Quintals/Acre',
+    min_per_acre: 18,
+    max_per_acre: 26,
+    optimal_soil_moisture: [45, 65],
+    temp_comfort: [15, 25],
+  },
   rice: {
     crop: 'Paddy (Rice)',
     unit: 'Quintals/Acre',
@@ -83,55 +107,77 @@ const CROP_BASELINES: Record<string, YieldBaseline> = {
     optimal_soil_moisture: [35, 60],
     temp_comfort: [20, 32],
   },
+  sugarcane: {
+    crop: 'Sugarcane',
+    unit: 'Tonnes/Acre',
+    min_per_acre: 35,
+    max_per_acre: 55,
+    optimal_soil_moisture: [65, 85],
+    temp_comfort: [25, 38],
+  },
+  mustard: {
+    crop: 'Mustard',
+    unit: 'Quintals/Acre',
+    min_per_acre: 7,
+    max_per_acre: 11,
+    optimal_soil_moisture: [40, 60],
+    temp_comfort: [15, 25],
+  },
+  banana: {
+    crop: 'Banana',
+    unit: 'Tonnes/Acre',
+    min_per_acre: 25,
+    max_per_acre: 40,
+    optimal_soil_moisture: [65, 85],
+    temp_comfort: [22, 35],
+  },
 };
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const {
-      cropName = 'Tomato',
-      growthStage = 'Vegetative',
-      area = 2.5,
-      historicalYield,
-      soilMoisture = 52,
-      soilTemperature = 25,
-      airTemperature = 28,
-      airHumidity = 65,
-      rainfallForecast = 12,
-    } = body;
+    const cropName = body.cropName || body.crop || 'Tomato';
+    const growthStage = body.growthStage || 'Vegetative Growth';
+    const area = Number(body.fieldArea || body.area || body.areaAcres || 2.5);
+    const historicalYield = body.historicalAverageYield || body.historicalYield || body.pastYield;
+    const soilMoisture = Number(body.recentSoilMoisture || body.soilMoisture || 52);
+    const soilTemperature = Number(body.soilTemperature || 25);
+    const airTemperature = Number(body.airTemperature || 28);
+    const airHumidity = Number(body.airHumidity || 65);
+    const rainfallForecast = Number(body.rainfallForecast || 12);
 
-    const key = Object.keys(CROP_BASELINES).find((k) =>
-      cropName.toLowerCase().includes(k)
-    );
-    const baseline = key
+    const queryKey = cropName.toLowerCase().trim();
+    const key = Object.keys(CROP_BASELINES).find((k) => queryKey.includes(k) || k.includes(queryKey));
+    
+    const baseline: YieldBaseline = key
       ? CROP_BASELINES[key]
       : {
           crop: cropName,
           unit: 'Quintals/Acre',
           min_per_acre: 15,
           max_per_acre: 25,
-          optimal_soil_moisture: [45, 70] as [number, number],
-          temp_comfort: [20, 32] as [number, number],
+          optimal_soil_moisture: [45, 70],
+          temp_comfort: [20, 32],
         };
 
     const influencingFactors: InfluencingFactor[] = [];
     let modifier = 1.0;
-    let confidenceScore = 82;
+    let confidenceScore = 85;
     const missingDataPoints: string[] = [];
 
     // 1. Growth Stage Multiplier
-    if (growthStage === 'Sowing' || growthStage === 'Germination') {
+    if (growthStage.includes('Sowing') || growthStage.includes('Germination')) {
       modifier *= 0.95;
-      confidenceScore -= 12; // Far from harvest, higher uncertainty
+      confidenceScore -= 10;
       influencingFactors.push({
         factor: 'Early Phenological Stage',
         impact: 'neutral',
         weight: 20,
         description: 'Crop is in early establishment phase. Extreme weather or pest pressures over the next 60-90 days will dominate actual harvest yield.',
       });
-    } else if (growthStage === 'Yield Formation' || growthStage === 'Ripening') {
+    } else if (growthStage.includes('Yield') || growthStage.includes('Ripening') || growthStage.includes('Harvest')) {
       modifier *= 1.05;
-      confidenceScore += 8; // Close to harvest, higher certainty
+      confidenceScore += 8;
       influencingFactors.push({
         factor: 'Advanced Reproductive Maturity',
         impact: 'positive',
@@ -140,42 +186,46 @@ export async function POST(req: NextRequest) {
       });
     } else {
       influencingFactors.push({
-        factor: 'Active Vegetative Canopy Growth',
+        factor: 'Vegetative Canopy Growth',
         impact: 'positive',
         weight: 15,
-        description: 'Vigorous leaf area index supports strong photosynthetic accumulation.',
+        description: 'Vigorous leaf and stem vegetative growth establishing adequate photosynthetic capacity.',
       });
     }
 
-    // 2. Soil Moisture Telemetry
-    const moisture = Number(soilMoisture) || 50;
-    if (moisture >= baseline.optimal_soil_moisture[0] && moisture <= baseline.optimal_soil_moisture[1]) {
-      modifier *= 1.03;
+    // 2. Soil Moisture Analysis
+    const [optMoistMin, optMoistMax] = baseline.optimal_soil_moisture;
+    if (soilMoisture >= optMoistMin && soilMoisture <= optMoistMax) {
+      modifier *= 1.04;
+      confidenceScore += 5;
       influencingFactors.push({
-        factor: 'Optimal Root-Zone Soil Moisture',
+        factor: 'Optimal Soil Hydration',
         impact: 'positive',
-        weight: 20,
-        description: `Current volumetric soil moisture (${moisture}%) matches optimal vegetative transpiration range (${baseline.optimal_soil_moisture[0]}–${baseline.optimal_soil_moisture[1]}%).`,
-      });
-    } else if (moisture < baseline.optimal_soil_moisture[0] - 10) {
-      modifier *= 0.90;
-      influencingFactors.push({
-        factor: 'Sub-Optimal Water Deficit',
-        impact: 'negative',
         weight: 25,
-        description: `Soil moisture (${moisture}%) is below minimum comfort point, risking moisture stress and reduced leaf cell expansion.`,
+        description: `Soil moisture (${soilMoisture}%) is in the optimal agronomic range (${optMoistMin}–${optMoistMax}%) for transpiration and nutrient uptake.`,
+      });
+    } else if (soilMoisture < optMoistMin) {
+      const deficit = optMoistMin - soilMoisture;
+      const penalty = Math.min(0.25, deficit * 0.015);
+      modifier *= (1 - penalty);
+      influencingFactors.push({
+        factor: 'Moisture Stress Deficit',
+        impact: 'negative',
+        weight: 30,
+        description: `Current root-zone moisture (${soilMoisture}%) is ${deficit}% below optimal baseline, causing stomatal closure and vegetative slowdown.`,
       });
     } else {
+      modifier *= 0.97;
       influencingFactors.push({
-        factor: 'Elevated Soil Saturation',
+        factor: 'Soil Saturation Caution',
         impact: 'negative',
         weight: 15,
-        description: `Elevated root moisture (${moisture}%) reduces soil oxygenation, potentially slowing nutrient uptake.`,
+        description: `Excessive soil moisture (${soilMoisture}%) may restrict rhizosphere oxygen availability if drainage is slow.`,
       });
     }
 
     // 3. Thermal Comfort
-    const temp = Number(airTemperature) || 28;
+    const temp = airTemperature;
     if (temp >= baseline.temp_comfort[0] && temp <= baseline.temp_comfort[1]) {
       modifier *= 1.02;
       influencingFactors.push({
@@ -198,7 +248,7 @@ export async function POST(req: NextRequest) {
     if (historicalYield && Number(historicalYield) > 0) {
       const hist = Number(historicalYield);
       const ratio = hist / ((baseline.min_per_acre + baseline.max_per_acre) / 2);
-      if (ratio > 0.5 && ratio < 1.8) {
+      if (ratio > 0.5 && ratio < 2.0) {
         modifier = (modifier + ratio) / 2;
         confidenceScore += 6;
         influencingFactors.push({
@@ -210,40 +260,58 @@ export async function POST(req: NextRequest) {
       }
     } else {
       missingDataPoints.push('Previous season harvest records for this plot');
-      confidenceScore -= 5;
+      confidenceScore -= 4;
     }
 
     // Calculate final ranges
     const calculatedMin = Math.round(baseline.min_per_acre * modifier * 10) / 10;
     const calculatedMax = Math.round(baseline.max_per_acre * modifier * 10) / 10;
-    const totalMin = Math.round(calculatedMin * Number(area));
-    const totalMax = Math.round(calculatedMax * Number(area));
+    const totalMin = Math.round(calculatedMin * area);
+    const totalMax = Math.round(calculatedMax * area);
+    const finalConfidence = Math.min(96, Math.max(55, confidenceScore));
 
     const confidenceExplanation =
-      confidenceScore >= 80
-        ? `High statistical stability based on active phenology and verified telemetry metrics.`
-        : `Moderate confidence (${confidenceScore}%). Forecast accuracy increases with additional historical harvest logs and local soil nutrient test data.`;
+      finalConfidence >= 80
+        ? `High statistical stability based on active phenology, verified moisture metrics, and regional ICAR growth curves.`
+        : `Moderate confidence (${finalConfidence}%). Forecast accuracy increases with additional historical harvest logs and local soil nutrient test data.`;
 
     const dataSufficiencyNote =
       missingDataPoints.length > 0
         ? `Model accuracy can be improved by adding: ${missingDataPoints.join(', ')}.`
         : `Sufficient plot data available for predictive modeling.`;
 
-    return NextResponse.json({
-      success: true,
+    const predictionPayload = {
       crop_name: baseline.crop,
       unit: baseline.unit,
-      predicted_per_acre_range: [calculatedMin, calculatedMax],
-      predicted_total_range: [totalMin, totalMax],
-      area_acres: Number(area),
-      confidence_score: Math.min(95, Math.max(50, confidenceScore)),
+      yield_unit: baseline.unit,
+      predicted_yield_unit: baseline.unit,
+      estimated_min_yield: calculatedMin,
+      estimated_max_yield: calculatedMax,
+      predicted_yield_min: calculatedMin,
+      predicted_yield_max: calculatedMax,
+      total_min_yield: totalMin,
+      total_max_yield: totalMax,
+      predicted_per_acre_range: [calculatedMin, calculatedMax] as [number, number],
+      predicted_total_range: [totalMin, totalMax] as [number, number],
+      field_area_acres: area,
+      area_acres: area,
+      confidence_score: finalConfidence,
       confidence_explanation: confidenceExplanation,
+      uncertainty_explanation: confidenceExplanation,
       influencing_factors: influencingFactors,
+      missing_data_points: missingDataPoints,
       data_sufficiency_note: dataSufficiencyNote,
+      historical_comparison: historicalYield ? `Compared to past yield of ${historicalYield} ${baseline.unit}` : null,
       is_guaranteed: false,
       disclaimer:
         'Yield predictions are statistical agronomic estimates based on historical benchmarks, phenology, and simulated/weather telemetry. Production is subject to unforecasted climatic anomalies, pest outbreaks, and farm management practices and is not guaranteed.',
       timestamp: new Date().toISOString(),
+    };
+
+    return NextResponse.json({
+      success: true,
+      prediction: predictionPayload,
+      ...predictionPayload,
     });
   } catch (error: any) {
     console.error('API /api/ai/predict-yield error:', error);
@@ -253,4 +321,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-

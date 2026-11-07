@@ -229,9 +229,16 @@ export async function POST(req: NextRequest) {
     // Sort descending by suitability score
     evaluatedCrops.sort((a, b) => b.suitability_score - a.suitability_score);
 
+    const topCrop = evaluatedCrops[0]?.name || 'Paddy (Rice)';
+    const topScore = evaluatedCrops[0]?.suitability_score || 90;
+    const rationale = `Based on your ${soilType} soil, pH of ${soilPh}, and ${season} season conditions, ${topCrop} demonstrates the highest agro-climatic suitability (${topScore}% index).`;
+
     return NextResponse.json({
       success: true,
+      recommendations: evaluatedCrops,
       evaluated_crops: evaluatedCrops,
+      top_crop: topCrop,
+      agronomic_rationale: rationale,
       environmental_snapshot: {
         soil_type: soilType,
         soil_ph: soilPh,

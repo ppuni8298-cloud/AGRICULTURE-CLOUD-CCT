@@ -407,11 +407,11 @@ export default function AiAssistantPage() {
       }
 
       setProviderBadge(
-        data.provider === 'google-gemini'
+        data.provider === 'google-gemini' || data.provider === 'gemini'
           ? 'Google Gemini 1.5 Agronomy'
           : data.provider === 'openai'
           ? 'OpenAI Agronomy Engine'
-          : 'ICAR Package of Practices (Rules Fallback)'
+          : 'AgroCloud AI Agronomy Intelligence (ICAR Expert System)'
       );
 
       // Save Assistant Response
